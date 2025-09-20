@@ -51,6 +51,9 @@ public class ShowBalance extends HttpServlet {
         // The servlet dispatches the control to the chosen jsp (through its address)
         // and passes it both the reference to the javabean (stored in the "request") and
         // the response where the jsp will store the final page.
+
+       //cancella questo
+
         RequestDispatcher dispatcher =
                 request.getRequestDispatcher(address);
         dispatcher.forward(request, response);
