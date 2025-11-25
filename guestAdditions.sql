@@ -129,3 +129,5 @@ ORDER BY quant_vend DESC;
 	VALUES ( 1, 'asdfmovie', '123456sO', 'asdfmovie@asd.it', '3' , NULL );
 
 
+SELECT DISTINCT id,username,passwordhash FROM Utente; 
+

@@ -33,12 +33,19 @@ package Model;
 
 
 
+//import org.apache.tomcat.jdbc.pool.DataSource;
+//import org.apache.tomcat.jdbc.pool.PoolProperties;
+//
+//import javax.swing.*;
+//import java.sql.Connection;
+//import java.sql.DriverManager;
+//import java.sql.SQLException;
+//import java.util.TimeZone;
+
 import org.apache.tomcat.jdbc.pool.DataSource;
 import org.apache.tomcat.jdbc.pool.PoolProperties;
 
-import javax.swing.*;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.TimeZone;
 
@@ -51,8 +58,8 @@ public class ConPool {
 			PoolProperties p = new PoolProperties();
 			p.setUrl("jdbc:mysql://localhost:3306/modelloMVC?serverTimezone=" + TimeZone.getDefault().getID());
 			p.setDriverClassName("com.mysql.cj.jdbc.Driver");
-			p.setUsername("root");
-			p.setPassword("trafalgar;");
+			p.setUsername("roots");
+			p.setPassword("roots");
 			p.setMaxActive(100);
 			p.setInitialSize(10);
 			p.setMinIdle(10);

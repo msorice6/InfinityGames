@@ -2,8 +2,8 @@ package Controller.GestioneUtente;
 
 import Model.*;
 
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
 
 
 public class MyServletException extends ServletException {

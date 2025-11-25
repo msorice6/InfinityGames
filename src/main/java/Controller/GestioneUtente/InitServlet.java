@@ -3,9 +3,9 @@ package Controller.GestioneUtente;
 
 import Model.*;
 
-import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
-import javax.servlet.http.HttpServlet;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.annotation.WebServlet;
+import jakarta.servlet.http.HttpServlet;
 import java.util.ArrayList;
 
 @WebServlet(name="MyInit", urlPatterns = "/MyInit",loadOnStartup=0)

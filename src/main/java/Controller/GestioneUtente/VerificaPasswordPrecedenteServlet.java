@@ -3,9 +3,9 @@ package Controller.GestioneUtente;
 import Model.Utente;
 import Model.UtenteDAO;
 
-import javax.servlet.*;
-import javax.servlet.http.*;
-import javax.servlet.annotation.*;
+import jakarta.servlet.*;
+import jakarta.servlet.http.*;
+import jakarta.servlet.annotation.*;
 import java.io.IOException;
 
 @WebServlet("/VerificaPassword")
