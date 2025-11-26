@@ -107,6 +107,22 @@ CREATE TABLE libreria (
         ON DELETE CASCADE
 );
 
+CREATE TABLE desideri (
+    idUtente INT NOT NULL,
+    idProdotto INT NOT NULL,
+    PRIMARY KEY (idUtente, idProdotto),
+    FOREIGN KEY (idUtente) REFERENCES Utente(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE,
+    FOREIGN KEY (idProdotto) REFERENCES Prodotto(id)
+        ON DELETE CASCADE
+        ON UPDATE CASCADE
+);
+
+
+
+
+
 -- 5. CREAZIONE VISTE --
 CREATE VIEW Popolari AS
 SELECT 
