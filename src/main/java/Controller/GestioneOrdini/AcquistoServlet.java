@@ -27,23 +27,23 @@ public class AcquistoServlet extends HttpServlet {
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
         Utente utente = (Utente) request.getSession().getAttribute("utente");
+
+        System.out.println("id utente: " + utente.getId());
         if (utente != null) {
 
 
             if (request.getParameter("conf-acq") != null) {
 
-                ProdottoDAO service = new ProdottoDAO();
-                UtenteDAO UtenteDao = new UtenteDAO();
-
+                ProdottoDAO prodottoDAO = new ProdottoDAO();
 
                 Carrello carrello = (Carrello) request.getSession().getAttribute("carrello");
-
-                CarrelloDAO.doDeleteAll(carrello);
+                System.out.println("preparati a ricevere un carrellone");
 
                 Date date = new Date();
-                DateFormat formatoData = DateFormat.getDateInstance(DateFormat.LONG, Locale.ITALY);
+                // Formato compatibile con MySQL DATETIME
+                java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+                String s = sdf.format(date);
 
-                String s = formatoData.format(date);
 
                 Collection<Carrello.ProdottoQuantita> lista = carrello.getProdotti();
                 ArrayList<Carrello.ProdottoQuantita> lis = new ArrayList(lista);
@@ -51,67 +51,46 @@ public class AcquistoServlet extends HttpServlet {
                 Ordini ordine = new Ordini();
                 ordine.setUtente(utente.getId());
                 ordine.setProdotti(lis);
+
+
+
                 ordine.setData(s);
                 ordine.setTotale(carrello.getPrezzoTotCent());
 
+                //insert in dettaglio ordini e in prodotto ordini
                 ordiniDAO.doSave(ordine);
 
+                // salva nel database la quantita' del prodotto
                 for (int i = 0; i < lis.size(); i++) {
                     ProdottoDAO.setQuantita(lis.get(i).getProdotto().getId(), lis.get(i).getQuantita());
                 }
 
+                // salva nella libreria dell'utente i prodotti nel carrello e rimuove i prodotti dal carrello
+                    Collection<Carrello.ProdottoQuantita> listaProdotti = carrello.getProdotti();
+                    for (Carrello.ProdottoQuantita pq : listaProdotti) {
+                        // Estraggo il prodotto dall'oggetto wrapper
+                        Prodotto p = pq.getProdotto();
 
-                OrdiniDAO ordiniDAO = new OrdiniDAO();
-                List<Ordini> Ordini = ordiniDAO.getRetrieveByUtente(utente.getId());
+                        // Stampo l'ID (che corrisponde all'idProdotto nel DB)
+                        System.out.println("ID Prodotto: " + p.getId() + " - Nome: " + p.getNome());
+                        prodottoDAO.doSaveInLibreria(p, carrello.getIdUtente());
 
-                ArrayList<Prodotto> prodotto = new ArrayList<>();
-
-                if (Ordini != null) {
-
-                    for (int i = 0; i < Ordini.size(); i++) {
-                        for (int j = 0; j < Ordini.get(i).getProdotti().size(); j++) {
-                            prodotto.add(Ordini.get(i).getProdotti().get(j).getProdotto());
-                        }
+                        carrello.remove(p.getId());
                     }
-                    ArrayList<Prodotto> nuovo = new ArrayList<>();
-
-
-                    for (int i = 0; i < prodotto.size(); i++) {
-                        boolean uguale = false;
-                        for (int j = i + 1; j < prodotto.size(); j++) {
-                            if (prodotto.get(i).getId() == prodotto.get(j).getId()) {
-                                uguale = true;
-                                break;
-                            }
-                        }
-                        if (!uguale) {
-                            nuovo.add(prodotto.get(i));
-                        }
-                    }
-
-
-                    if (UtenteDao.getLibreria(utente.getId()).size() > 0) {
-                        service.doDeleteLibreria(utente.getId());
-                    }
-                    utente.setLibreria(nuovo);
-                    for (int i = 0; i < nuovo.size(); i++) {
-                        service.doSaveInLibreria(nuovo.get(i), utente.getId());
-                    }
-
-
+                    CarrelloDAO.doDeleteAll(carrello);
                     carrello.getProdotti().clear();
+
+
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/results/AcquistoSuccesso.jsp");
+                    dispatcher.forward(request, response);
+
+
+                } else {
+
+
+                    RequestDispatcher dispatcher = request.getRequestDispatcher("./login.jsp");
+                    dispatcher.forward(request, response);
                 }
-
-
             }
-            RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/results/AcquistoSuccesso.jsp");
-            dispatcher.forward(request, response);
-
-
-        } else {
-            RequestDispatcher dispatcher = request.getRequestDispatcher("./login.jsp");
-            dispatcher.forward(request, response);
         }
     }
-}
-

@@ -677,7 +677,8 @@ public class ProdottoDAO {
 
     public void doSaveProdotto(int uID, int pID, String data_vis) {
         try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps = con.prepareStatement("INSERT INTO utenteprodotti VALUES (?, ?,? ,1)");
+//            PreparedStatement ps = con.prepareStatement("INSERT INTO utenteprodotti VALUES (?, ?,? ,1)");
+            PreparedStatement ps = con.prepareStatement("INSERT INTO utenteprodotti (uid, pid, data_vis, visual) VALUES (?, ?, ?, 1)");
             ps.setInt(1, uID);
             ps.setInt(2, pID);
             ps.setString(3, data_vis);
