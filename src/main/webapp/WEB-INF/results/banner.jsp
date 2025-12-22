@@ -133,8 +133,13 @@
         <div class="menu">
             <ul class="menu_tendina">
                 <li class="dropdown">
+                    <%--
                     <a class="menuitem" href="/InfinityGames/"
                        style="text-decoration: none">NEGOZIO </a>
+                       --%>
+                <a class="menuitem" href="${pageContext.request.contextPath}/Popolari"
+                    style="text-decoration: none">NEGOZIO</a>
+
                     <div class="dropdown-nonresp">
 
                         <a href="ListaDesideri">Lista dei desideri</a>
