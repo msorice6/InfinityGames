@@ -109,14 +109,19 @@ CREATE TABLE libreria (
                               ON DELETE CASCADE
 );
 
+CREATE TABLE desideri (
+                          idUtente INT NOT NULL,
+                          idProdotto INT NOT NULL,
+                          PRIMARY KEY (idUtente, idProdotto),
+                          FOREIGN KEY (idUtente) REFERENCES Utente(id)
+                              ON DELETE CASCADE
+                              ON UPDATE CASCADE,
+                          FOREIGN KEY (idProdotto) REFERENCES Prodotto(id)
+                              ON DELETE CASCADE
+                              ON UPDATE CASCADE
+);
 
--- INSERT INTO Utente (username, passwordhash, email, adminn, images)
--- VALUES
--- ('mrossi', '123456sO', 'mario.rossi@example.com', FALSE, 'uploads/mrossi.png'),
--- ('lbianchi', '123456sO', 'laura.bianchi@example.com', TRUE, NULL),
--- ('gverdi', '123456sO', 'gianni.verdi@example.com', FALSE, 'uploads/gverdi.jpg'),
--- ('aferrari', '123456sO', 'anna.ferrari@example.com', FALSE, NULL),
--- ('admin', '123456sO', 'admin@example.com', TRUE, 'uploads/admin_avatar.png');
+
 
 
 
