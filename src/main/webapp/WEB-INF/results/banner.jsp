@@ -107,6 +107,7 @@
                             <c:if test="${utente.admin}">
                                 <a href="AdminCategoria">Aggiungi Categoria</a>
                                 <a href="AdminProdotto">Aggiungi Prodotto</a>
+                                <a href="AdminProdottiInEvidenza">Gestisci Prodotti in Evidenza</a>
                                 <a href="AdminUtenti">Utenti</a>
                             </c:if>
                             <c:if test="${!utente.admin}">
@@ -167,6 +168,7 @@
                             <c:if test="${utente.admin}">
                                 <a href="AdminCategoria">Aggiungi Categoria</a>
                                 <a href="AdminProdotto">Aggiungi Prodotto</a>
+                                <a href="AdminProdottiInEvidenza">Gestisci Prodotti in Evidenza</a>
                                 <a href="AdminUtenti">Utenti</a>
                             </c:if>
                             <c:if test="${!utente.admin}">

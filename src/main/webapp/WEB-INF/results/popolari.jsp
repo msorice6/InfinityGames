@@ -25,7 +25,7 @@
 <div class="contain" ondblclick="chiudi(this)">
     <div class="contain_all">
 
-        <p> IN QUESTA SEZIONE PUOI TROVARE I PRODOTTI IN SCONTO</p>
+        <p> IN QUESTA SEZIONE PUOI TROVARE I PRODOTTI POPOLARI</p>
         <c:choose>
             <c:when test="${popolari.size() > 0}">
         <!-- MENU # 1 -->
@@ -38,10 +38,10 @@
                                 <c:when test="${o == 'DEFAULT'}">
                                     <c:set var="desc" value="default" />
                                 </c:when>
-                                <c:when test="${o == 'PREZZO_ASC'}">
+                                <c:when test="${o == 'PREZZO_DESC'}">
                                     <c:set var="desc" value="piu popolari" />
                                 </c:when>
-                                <c:when test="${o == 'PREZZO_DESC'}">
+                                <c:when test="${o == 'PREZZO_ASC'}">
                                     <c:set var="desc" value="meno popolari" />
                                 </c:when>
                             </c:choose>
@@ -59,6 +59,7 @@
             </div>
         </div>
         <div id="menu" >
+
             <c:forEach items="${popolari}" var="prodotto">
                 <div class="contieni">
                     <div class="img-col">

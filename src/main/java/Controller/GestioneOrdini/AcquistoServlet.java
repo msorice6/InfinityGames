@@ -44,7 +44,6 @@ public class AcquistoServlet extends HttpServlet {
                 java.text.SimpleDateFormat sdf = new java.text.SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
                 String s = sdf.format(date);
 
-
                 Collection<Carrello.ProdottoQuantita> lista = carrello.getProdotti();
                 ArrayList<Carrello.ProdottoQuantita> lis = new ArrayList(lista);
 
@@ -52,12 +51,10 @@ public class AcquistoServlet extends HttpServlet {
                 ordine.setUtente(utente.getId());
                 ordine.setProdotti(lis);
 
-
-
                 ordine.setData(s);
                 ordine.setTotale(carrello.getPrezzoTotCent());
 
-                //insert in dettaglio ordini e in prodotto ordini
+
                 ordiniDAO.doSave(ordine);
 
                 // salva nel database la quantita' del prodotto
@@ -73,9 +70,14 @@ public class AcquistoServlet extends HttpServlet {
 
                         // Stampo l'ID (che corrisponde all'idProdotto nel DB)
                         System.out.println("ID Prodotto: " + p.getId() + " - Nome: " + p.getNome());
-                        prodottoDAO.doSaveInLibreria(p, carrello.getIdUtente());
 
-                        carrello.remove(p.getId());
+                        //Se il prodotto e' gia' memorizzato nella libreria non lo memorizza
+                        if (!prodottoDAO.isPresenteInLibreria(p.getId(), carrello.getIdUtente())) {
+                            prodottoDAO.doSaveInLibreria(p, carrello.getIdUtente());
+                        }
+
+
+//                        carrello.remove(p.getId());
                     }
                     CarrelloDAO.doDeleteAll(carrello);
                     carrello.getProdotti().clear();

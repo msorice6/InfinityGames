@@ -29,6 +29,89 @@ public class ProdottoDAO {
     }
 
 
+    public ArrayList<Prodotto> doRetrieveEvidenzaAll(int offset, int limit) {
+
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps =
+                    con.prepareStatement("SELECT  id,nome, descrizione,prezzo,sconto,images FROM Prodotto LIMIT ?, ?");
+            ps.setInt(1, offset);
+            ps.setInt(2, limit);
+            ResultSet rs = ps.executeQuery();
+            ArrayList<Prodotto> list = new ArrayList<Prodotto>();
+            while (rs.next()) {
+
+                Prodotto p = new Prodotto();
+                p.setId(rs.getInt(1));
+                p.setNome(rs.getString(2));
+                p.setDescrizione(rs.getString(3));
+                p.setPrezzo(rs.getDouble(4));
+                p.setSconto(rs.getInt(5));
+                p.setImages(rs.getString(6));
+                p.setCategorie(getCategorie(con, p.getId()));
+                list.add(p);
+
+            }
+            return list;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public ArrayList<Prodotto> doRetrieveEvidenzaAll_forTesting() {
+        ArrayList<Prodotto> list = new ArrayList<>();
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps =
+                    con.prepareStatement("SELECT id_evidenza FROM Prodotto_in_evidenza");
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Prodotto p = new Prodotto();
+                p.setId(rs.getInt(1));
+                p.setNome(doRetrieveById(rs.getInt(1)).getNome());
+                p.setDescrizione(doRetrieveById(rs.getInt(1)).getDescrizione());
+                p.setPrezzo(doRetrieveById(rs.getInt(1)).getPrezzo());
+                p.setSconto(doRetrieveById(rs.getInt(1)).getSconto());
+                p.setImages(doRetrieveById(rs.getInt(1)).getImages());
+                p.setCategorie(getCategorie(con, p.getId()));
+                list.add(p);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+
+    }
+
+    public void doRmEvidenza() {
+        try (Connection con = ConPool.getConnection()) {
+
+            PreparedStatement psa = con.prepareStatement("TRUNCATE TABLE Prodotto_in_evidenza");
+            psa.executeUpdate();
+
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public void doUpdateEvidenza(Prodotto prodotto) {
+        try (Connection con = ConPool.getConnection()) {
+
+
+            PreparedStatement ps = con
+                    .prepareStatement("INSERT INTO Prodotto_in_evidenza (id_evidenza) VALUES (?)");
+
+            ps.setInt(1, prodotto.getId());
+
+            int updated = ps.executeUpdate(); // <-- this was missing
+            if (updated != 1) {
+                throw new RuntimeException("INSERT INTO Prodotto_in_evidenza failed.");
+            }
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     public ArrayList<Prodotto> doRetrieveAll(int offset, int limit) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =
@@ -327,6 +410,25 @@ public class ProdottoDAO {
         }
     }
 
+    public boolean isPresenteInLibreria(int idProdotto, int idUtente) {
+        boolean presente = false;
+        String sql = "SELECT * FROM libreria WHERE idProdotto = ? AND idUtente = ?";
+
+        try (Connection con = ConPool.getConnection();
+             PreparedStatement ps = con.prepareStatement(sql)) {
+            ps.setInt(1, idProdotto);
+            ps.setInt(2, idUtente);
+            ResultSet rs = ps.executeQuery();
+            if (rs.next()) {
+                presente = true;
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return presente;
+    }
+
+
     public void doSaveInLibreria(Prodotto p, int id) {
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =
@@ -474,11 +576,17 @@ public class ProdottoDAO {
         return list;
     }
 
+
+
+
+
+
     public ArrayList<Prodotto> doRetrieveByPopolare() {
         ArrayList<Prodotto> list = new ArrayList<>();
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =
-                    con.prepareStatement("SELECT id,nome,descrizione,prezzo,sconto,images FROM Popolari");
+                    con.prepareStatement("SELECT id,nome,descrizione,prezzo,sconto,images FROM Prodotto");
+//                    con.prepareStatement("SELECT id,nome,descrizione,prezzo,sconto,images FROM Popolari");
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -503,7 +611,8 @@ public class ProdottoDAO {
     }
 
     public enum OrderByPopolari {
-        DEFAULT(""), PREZZO_ASC("ORDER BY tot ASC"), PREZZO_DESC("ORDER BY tot DESC");
+//        DEFAULT(""), PREZZO_ASC("ORDER BY tot ASC"), PREZZO_DESC("ORDER BY tot DESC");
+        DEFAULT(""), PREZZO_ASC("ORDER BY quant_vend ASC"), PREZZO_DESC("ORDER BY quant_vend DESC");
         private String sql;
 
         private OrderByPopolari(String sql) {
@@ -517,12 +626,13 @@ public class ProdottoDAO {
         ArrayList<Prodotto> list = new ArrayList<>();
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =
-                    con.prepareStatement("SELECT id,nome,descrizione,prezzo,sconto,images FROM Popolari " +
+                    con.prepareStatement("SELECT id,nome,descrizione,prezzo,sconto,images FROM Prodotto "
+                            +
                             order.sql +
                             " LIMIT ?,?;");
+
             ps.setInt(1, i);
             ps.setInt(2, perpag);
-
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Prodotto p = new Prodotto();
