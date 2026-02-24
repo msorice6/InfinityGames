@@ -58,8 +58,8 @@ public class ConPool {
 			PoolProperties p = new PoolProperties();
 			p.setUrl("jdbc:mysql://localhost:3306/modelloMVC?serverTimezone=" + TimeZone.getDefault().getID());
 			p.setDriverClassName("com.mysql.cj.jdbc.Driver");
-			p.setUsername("roots");
-			p.setPassword("roots");
+			p.setUsername("root");
+			p.setPassword("Bdlab3!");
 			p.setMaxActive(100);
 			p.setInitialSize(10);
 			p.setMinIdle(10);

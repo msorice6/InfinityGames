@@ -107,6 +107,7 @@
                             <c:if test="${utente.admin}">
                                 <a href="AdminCategoria">Aggiungi Categoria</a>
                                 <a href="AdminProdotto">Aggiungi Prodotto</a>
+                                <a href="AdminProdottiInEvidenza">Gestisci Prodotti in Evidenza</a>
                                 <a href="AdminUtenti">Utenti</a>
                             </c:if>
                             <c:if test="${!utente.admin}">
@@ -133,8 +134,13 @@
         <div class="menu">
             <ul class="menu_tendina">
                 <li class="dropdown">
+                    <%--
                     <a class="menuitem" href="/InfinityGames/"
                        style="text-decoration: none">NEGOZIO </a>
+                       --%>
+                <a class="menuitem" href="${pageContext.request.contextPath}/Popolari"
+                    style="text-decoration: none">NEGOZIO</a>
+
                     <div class="dropdown-nonresp">
 
                         <a href="ListaDesideri">Lista dei desideri</a>
@@ -162,6 +168,7 @@
                             <c:if test="${utente.admin}">
                                 <a href="AdminCategoria">Aggiungi Categoria</a>
                                 <a href="AdminProdotto">Aggiungi Prodotto</a>
+                                <a href="AdminProdottiInEvidenza">Gestisci Prodotti in Evidenza</a>
                                 <a href="AdminUtenti">Utenti</a>
                             </c:if>
                             <c:if test="${!utente.admin}">
