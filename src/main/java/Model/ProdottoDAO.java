@@ -840,8 +840,12 @@ public class ProdottoDAO {
                 ps.setInt(2, offset);
                 ps.setInt(3, limit);
             }else{
-                ps= con.prepareStatement(
+/*                ps= con.prepareStatement(
                         "SELECT id, nome, descrizione, prezzo,sconto,images FROM prodotto WHERE MATCH(nome) AGAINST(? IN BOOLEAN MODE) LIMIT ?, ?");
+ */
+                ps= con.prepareStatement(
+                        "SELECT id, nome, descrizione, prezzo,sconto,images FROM prodotto WHERE nome LIKE nome");
+
                 ps.setString(1, against);
                 ps.setInt(2, offset);
                 ps.setInt(3, limit);
@@ -865,7 +869,6 @@ public class ProdottoDAO {
         }
         return prodotti;
     }
-
 
     public void doDeleteByNomeForTesting(String nomeProdotto){
         try (Connection con = ConPool.getConnection()) {
