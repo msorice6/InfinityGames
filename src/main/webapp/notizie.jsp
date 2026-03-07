@@ -17,7 +17,7 @@
 <jsp:include page="./WEB-INF/results/banner.jsp">
     <jsp:param name="pageTitle" value="Notizie"/>
 </jsp:include>
-<div style="margin: 2% 4%" onclick="chiudi(this)">
+<div style="margin: 2% 4%" >
 <p>
     InfinityGames è una piattaforma sviluppata da alunni di UNISA che si occupa di distribuzione digitale,
     di gestione dei diritti digitali, di modalità di gioco multi giocatore.

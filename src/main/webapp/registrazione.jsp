@@ -24,7 +24,7 @@
 </jsp:include>
 
 <c:if test="${utente == null}">
-    <div class="page-content2" onclick="chiudi(this)">
+    <div class="page-content2" >
 
         <div class="leftcol-reg">
             <form name="registrazione" action="Registrazione" method="post" style="max-width:500px;margin:auto">
@@ -60,7 +60,7 @@
     </div>
 </c:if>
 <c:if test="${utente != null}">
-    <div class="reg-all" onclick="chiudi(this)">
+    <div class="reg-all" >
         <div class="font">
             <p style="margin-top: 0px">Sei già registrato, esci e crea un nuovo account</p>
             <p>Vai al <a href="/InfinityGames/" >NEGOZIO</a> </p>

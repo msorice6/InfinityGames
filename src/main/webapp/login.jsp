@@ -23,8 +23,9 @@
 
 <c:choose>
     <c:when test="${utente == null}">
-<div id="login" class="page-content" onclick="chiudi(this)">
-    <div class="main">
+        <div id="login" class="page-content" >
+
+        <div class="main">
 <% if(request.getSession().getAttribute("messaggio") != null){ %>
 <div id="error-display">
     <p><%= request.getSession().getAttribute("messaggio")%></p>
@@ -80,7 +81,8 @@
 </div>
 </c:when>
 <c:otherwise>
-    <div class="reg-all" onclick="chiudi(this)">
+    <div class="reg-all" >
+<%--        onclick="chiudi(this)"--%>
         <div class="font">
             <p style="margin-top: 0px">Hai già effettuato l'accesso</p>
             <p>Vai al <a href="/InfinityGames/" >NEGOZIO</a> </p>

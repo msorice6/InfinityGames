@@ -1,9 +1,6 @@
 
-
+/*
 $(document).ready(function () {
-
-
-
 $(".drop").click(function () {
 
         if ($(this).next().height() == 0) {
@@ -19,4 +16,4 @@ $(".drop").click(function () {
     })
 
 })
-
+*/

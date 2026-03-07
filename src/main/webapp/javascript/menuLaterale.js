@@ -1,30 +1,22 @@
 
-
-
 function openNav() {
-      $("#myNav").css("width","230px");
+    document.getElementById("myNav").style.width = "100%";
 
 }
 
 
-function chiudi(q)
-{
-    if ($("#myNav").height() > 0) {
-        $(function () {
-            $(q).click(function (e) {
-
-                if ($(e.target).is("resp"))
-                    return;
-                $("#myNav").css("width", "0px");
-            });
-        });
-    }
+function openNavOrder() {
+    document.getElementById("myNavOrder").style.width = "100%";
 }
 
+function closeNavOrder() {
+
+    document.getElementById("myNavOrder").style.width = "0%";
+
+}
 
 function closeNav() {
 
-    $("#myNav").css("width","0px");
+    document.getElementById("myNav").style.width = "0%";
 
 }
-
