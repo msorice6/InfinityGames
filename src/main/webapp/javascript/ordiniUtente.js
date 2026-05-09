@@ -1,10 +1,21 @@
-$(document).ready(function () {
+document.addEventListener("DOMContentLoaded", function() {
 
-    $(".info").click(function () {
-        if ($(this).next().height() == 0) {
-            $(this).next().css({"height": "auto", "padding": "10px", "border": "solid"});
-        } else {
-            $(this).next().css({"height": "0px", "padding": "0px", "border": "none"});
-        }
-    })
-})
+    var infoElements = document.querySelectorAll(".info");
+
+    infoElements.forEach(function(element) {
+        element.addEventListener("click", function() {
+            var nextElement = this.nextElementSibling;
+
+            if (nextElement.offsetHeight == 0) {
+                nextElement.style.height = "auto";
+                nextElement.style.padding = "10px";
+                nextElement.style.border = "solid";
+            } else {
+                nextElement.style.height = "0px";
+                nextElement.style.padding = "0px";
+                nextElement.style.border = "none";
+            }
+        });
+    });
+
+});

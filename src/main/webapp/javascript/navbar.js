@@ -1,39 +1,82 @@
-$(window).resize(function () {
+window.addEventListener("resize", function() {
 
+    if (window.innerWidth < 921) {
 
-    if ($(window).width() < 921) {
-
-        $(".accordion").unbind("mouseenter");
-       $(".nav-item").mouseleave(function () {
-            $(".accordion").next().css("display", "none");
-        })
-
-        $(".accordion").click(function () {
-
-           /*    var panel = this.nextElementSibling;
-               if (panel.style.display == "block") {
-                 panel.style.display = "none";
-               } else {
-                 panel.style.display = "block";
-                 panel.style.position= "static";
-               }
-*/
-            if ($(this).next().is(":visible")) {
-                $(this).next().css("display", "none");
-            } else {
-                $(this).next().css("display", "block");
-                $(this).next().css("position", "static");
-            }
+        // Rimuovi eventi mouseenter dagli elementi con classe accordion
+        var accordions = document.querySelectorAll(".accordion");
+        accordions.forEach(function(accordion) {
+            accordion.removeEventListener("mouseenter", mouseEnterHandler);
         });
+
+        // Aggiungi evento mouseleave agli elementi nav-item
+        var navItems = document.querySelectorAll(".nav-item");
+        navItems.forEach(function(navItem) {
+            navItem.addEventListener("mouseleave", function() {
+                var accordionsNext = document.querySelectorAll(".accordion");
+                accordionsNext.forEach(function(accordion) {
+                    accordion.nextElementSibling.style.display = "none";
+                });
+            });
+        });
+
+        // Aggiungi evento click agli elementi accordion
+        accordions.forEach(function(accordion) {
+            accordion.addEventListener("click", function() {
+                var nextElement = this.nextElementSibling;
+                if (nextElement.style.display === "block") {
+                    nextElement.style.display = "none";
+                } else {
+                    nextElement.style.display = "block";
+                    nextElement.style.position = "static";
+                }
+            });
+        });
+
     } else {
 
-      $(".accordion").next().css("position", "absolute");
-        $(".accordion").mouseenter(function () {
-            $(this).next().css({"display": "block", "position": "absolute"});
-        })
-        $(".nav-item").mouseleave(function () {
-            $(".accordion").next().css("display", "none");
-        })
+        // Imposta position absolute per gli elementi successivi agli accordion
+        var accordions = document.querySelectorAll(".accordion");
+        accordions.forEach(function(accordion) {
+            accordion.nextElementSibling.style.position = "absolute";
+        });
 
+        // Rimuovi eventi click esistenti e aggiungi mouseenter
+        accordions.forEach(function(accordion) {
+            accordion.removeEventListener("click", clickHandler);
+            accordion.addEventListener("mouseenter", function() {
+                var nextElement = this.nextElementSibling;
+                nextElement.style.display = "block";
+                nextElement.style.position = "absolute";
+            });
+        });
+
+        // Gestione mouseleave per nav-item
+        var navItems = document.querySelectorAll(".nav-item");
+        navItems.forEach(function(navItem) {
+            navItem.addEventListener("mouseleave", function() {
+                var accordionsNext = document.querySelectorAll(".accordion");
+                accordionsNext.forEach(function(accordion) {
+                    accordion.nextElementSibling.style.display = "none";
+                });
+            });
+        });
     }
-})
+});
+
+// Handler per mouseenter (per poterlo rimuovere)
+function mouseEnterHandler() {
+    var nextElement = this.nextElementSibling;
+    nextElement.style.display = "block";
+    nextElement.style.position = "absolute";
+}
+
+// Handler per click (per poterlo rimuovere)
+function clickHandler() {
+    var nextElement = this.nextElementSibling;
+    if (nextElement.style.display === "block") {
+        nextElement.style.display = "none";
+    } else {
+        nextElement.style.display = "block";
+        nextElement.style.position = "static";
+    }
+}
