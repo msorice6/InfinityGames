@@ -1,11 +1,5 @@
 <%@ page import="java.util.List" %>
-<%@ page import="Model.Prodotto" %><%--
-  Created by IntelliJ IDEA.
-  User: Francesco Sabia
-  Date: 30/03/2020
-  Time: 21:53
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="Model.Prodotto" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c"
           uri="http://java.sun.com/jsp/jstl/core" %>

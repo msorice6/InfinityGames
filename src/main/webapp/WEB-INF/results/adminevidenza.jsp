@@ -1,10 +1,4 @@
-<%--
-  Created by IntelliJ IDEA.
-  User: Francesco Sabia
-  Date: 19/05/2020
-  Time: 11:27
-  To change this template use File | Settings | File Templates.
---%>
+
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c"
           uri="http://java.sun.com/jsp/jstl/core" %>
@@ -19,7 +13,7 @@
     <div class="font">
         <div>
             <h1>Inserisci l'id dei prodotti che vuoi mettere in evidenza:</h1>
-<%--            <c:if test="${param.rimuovi == null}"> --%>
+
                 <div>
                     <form action="AdminProdottiInEvidenza" method="get"
                           style="display: flex; gap: 20px; align-items: center; justify-content: center;">
