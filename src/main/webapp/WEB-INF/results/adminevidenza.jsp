@@ -13,7 +13,7 @@
     <div class="font">
         <div>
             <h1>Inserisci l'id dei prodotti che vuoi mettere in evidenza:</h1>
-
+<%--            <c:if test="${param.rimuovi == null}"> --%>
                 <div>
                     <form action="AdminProdottiInEvidenza" method="get"
                           style="display: flex; gap: 20px; align-items: center; justify-content: center;">
