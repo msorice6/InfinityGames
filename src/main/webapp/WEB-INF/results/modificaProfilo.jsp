@@ -1,29 +1,8 @@
-<%@ page import="java.io.File" %><%--
-  Created by IntelliJ IDEA.
-  User: Francesco Sabia
-  Date: 07/06/2020
-  Time: 18:58
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="java.io.File" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c"
           uri="http://java.sun.com/jsp/jstl/core" %>
-<!--<html>
-<head>
-    <title>Modifica Profilo</title>
-    <link rel="stylesheet"
-          href="./css/style.css"
-          type="text/css"/>
-    <link rel="stylesheet"
-          href="./css/categoria.css"
-          type="text/css"/>
-    <link rel="stylesheet"
-          href="./css/profilo.css"
-          type="text/css"/>
-    <script src="./javascript/modificaProfilo.js"></script>
 
-</head>
-<body>-->
 <jsp:include page="banner.jsp">
     <jsp:param name="pageTitle" value="ModificaProfilo"/>
 </jsp:include>

@@ -1,13 +1,7 @@
 <%@ page import="java.util.ArrayList" %>
 <%@ page import="Model.Prodotto" %>
 <%@ page import="Model.ProdottoDAO" %>
-<%@ page import="Model.Utente" %><%--
-  Created by IntelliJ IDEA.
-  User: Francesco Sabia
-  Date: 07/05/2020
-  Time: 22:11
-  To change this template use File | Settings | File Templates.
---%>
+<%@ page import="Model.Utente" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c"
           uri="http://java.sun.com/jsp/jstl/core"%>
