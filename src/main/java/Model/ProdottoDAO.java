@@ -103,7 +103,7 @@ public class ProdottoDAO {
 
             ps.setInt(1, prodotto.getId());
 
-            int updated = ps.executeUpdate(); // <-- this was missing
+            int updated = ps.executeUpdate();
             if (updated != 1) {
                 throw new RuntimeException("INSERT INTO Prodotto_in_evidenza failed.");
             }
@@ -186,7 +186,7 @@ public class ProdottoDAO {
             ps.setString(6,prodotto.getVideo());
             ps.setInt(7, prodotto.getId());
             if (ps.executeUpdate() != 1) {
-               throw new RuntimeException("UPDATE error.");
+                throw new RuntimeException("UPDATE error.");
 
             }
 
@@ -258,40 +258,10 @@ public class ProdottoDAO {
             }
 
         } catch (SQLException e) {
-             e.printStackTrace();
+            e.printStackTrace();
         }
         return null;
     }
-
-  /*  public List<Prodotto> doRetrieveByNomeOrDescrizione(String against, int offset, int limit) {
-        ArrayList<Prodotto> prodotti = new ArrayList<>();
-        try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps = con.prepareStatement(
-                    "SELECT id, nome, descrizione, prezzo,sconto,images FROM Prodotto WHERE nome Like('%?%') LIMIT ?,?;");
-            ps.setString(1, against);
-            ps.setInt(2, offset);
-            ps.setInt(3, limit);
-
-            ResultSet rs = ps.executeQuery();
-            while (rs.next()) {
-                Prodotto p = new Prodotto();
-                p.setId(rs.getInt(1));
-                p.setNome(rs.getString(2));
-                p.setDescrizione(rs.getString(3));
-                p.setPrezzo(rs.getDouble(4));
-                p.setSconto(rs.getInt(5));
-                p.setImages(rs.getString(6));
-                p.setCategorie(getCategorie(con, p.getId()));
-                prodotti.add(p);
-            }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return prodotti;
-    }*/
-
-
 
     public Prodotto doRetrieveProdottoByNome(String nomeProdotto) {
         try (Connection con = ConPool.getConnection()) {
@@ -314,6 +284,7 @@ public class ProdottoDAO {
             throw new RuntimeException(e);
         }
     }
+
     static List<Categoria> getCategorie(Connection con, int idProdotto) throws SQLException {
         PreparedStatement ps = con.prepareStatement(
                 "SELECT id, nome, descrizione FROM Categoria LEFT JOIN prodottocategoria ON id=idCategoria WHERE idProdotto=?");
@@ -428,25 +399,39 @@ public class ProdottoDAO {
         return presente;
     }
 
-
-    public void doSaveInLibreria(Prodotto p, int id) {
+    // METODO AGGIORNATO - SENZA descrizione
+    public void doSaveInLibreria(Prodotto p, int id, int quantita) {
         try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps =
-                    con.prepareStatement("INSERT INTO libreria(idUtente,idProdotto,nome,descrizione,images) VALUES (?,?,?,?,?) ");
+            // Verifica se il prodotto è già presente in libreria
+            PreparedStatement psCheck = con.prepareStatement(
+                    "SELECT quantita FROM libreria WHERE idUtente = ? AND idProdotto = ?"
+            );
+            psCheck.setInt(1, id);
+            psCheck.setInt(2, p.getId());
+            ResultSet rs = psCheck.executeQuery();
 
-
-            ps.setInt(1, id);
-            ps.setInt(2, p.getId());
-            ps.setString(3, p.getNome());
-            ps.setString(4, p.getDescrizione());
-            ps.setString(5, p.getImages());
-
-
-            if (ps.executeUpdate() < 1) {
-                throw new RuntimeException("INSERT error.");
+            if (rs.next()) {
+                // Prodotto già presente: aggiorna la quantità
+                int nuovaQuantita = rs.getInt(1) + quantita;
+                PreparedStatement psUpdate = con.prepareStatement(
+                        "UPDATE libreria SET quantita = ? WHERE idUtente = ? AND idProdotto = ?"
+                );
+                psUpdate.setInt(1, nuovaQuantita);
+                psUpdate.setInt(2, id);
+                psUpdate.setInt(3, p.getId());
+                psUpdate.executeUpdate();
+            } else {
+                // Prodotto nuovo: inserisci
+                PreparedStatement psInsert = con.prepareStatement(
+                        "INSERT INTO libreria(idUtente, idProdotto, nome, images, quantita) VALUES (?, ?, ?, ?, ?)"
+                );
+                psInsert.setInt(1, id);
+                psInsert.setInt(2, p.getId());
+                psInsert.setString(3, p.getNome());
+                psInsert.setString(4, p.getImages());
+                psInsert.setInt(5, quantita);
+                psInsert.executeUpdate();
             }
-
-
         } catch (SQLException e) {
             throw new RuntimeException(e);
         }
@@ -507,29 +492,26 @@ public class ProdottoDAO {
         }
     }
 
-    ;
-
+    // METODO AGGIORNATO - SENZA descrizione nella SELECT
     public List<Prodotto> doRetrieveByLibreria(OrderByAlfabetico order, int id, int i, int perpag) {
         ArrayList<Prodotto> list = new ArrayList<Prodotto>();
         try (Connection con = ConPool.getConnection()) {
-            PreparedStatement ps =
-                    con.prepareStatement("SELECT  idProdotto,nome,descrizione,images FROM libreria WHERE idUtente=? " + order.sql + "  LIMIT ?, ?");
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT idProdotto, nome, images, quantita FROM libreria WHERE idUtente=? " + order.sql + " LIMIT ?, ?"
+            );
             ps.setInt(1, id);
             ps.setInt(2, i);
             ps.setInt(3, perpag);
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
                 Prodotto p = new Prodotto();
-
                 p.setId(rs.getInt(1));
                 p.setNome(rs.getString(2));
-                p.setDescrizione(rs.getString(3));
-                p.setImages(rs.getString(4));
+                p.setImages(rs.getString(3));
+                p.setQuantitaPosseduta(rs.getInt(4));
                 p.setCategorie(getCategorie(con, p.getId()));
                 list.add(p);
-
             }
-
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -544,8 +526,6 @@ public class ProdottoDAO {
             this.sql = sql;
         }
     }
-
-    ;
 
     public List<Prodotto> doRetrieveBySconto(OrderBySconto orderBy, int i, int perpag) {
         ArrayList<Prodotto> list = new ArrayList<Prodotto>();
@@ -576,17 +556,11 @@ public class ProdottoDAO {
         return list;
     }
 
-
-
-
-
-
     public ArrayList<Prodotto> doRetrieveByPopolare() {
         ArrayList<Prodotto> list = new ArrayList<>();
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps =
                     con.prepareStatement("SELECT id,nome,descrizione,prezzo,sconto,images FROM Prodotto");
-//                    con.prepareStatement("SELECT id,nome,descrizione,prezzo,sconto,images FROM Popolari");
 
             ResultSet rs = ps.executeQuery();
             while (rs.next()) {
@@ -611,7 +585,6 @@ public class ProdottoDAO {
     }
 
     public enum OrderByPopolari {
-//        DEFAULT(""), PREZZO_ASC("ORDER BY tot ASC"), PREZZO_DESC("ORDER BY tot DESC");
         DEFAULT(""), PREZZO_ASC("ORDER BY quant_vend ASC"), PREZZO_DESC("ORDER BY quant_vend DESC");
         private String sql;
 
@@ -619,8 +592,6 @@ public class ProdottoDAO {
             this.sql = sql;
         }
     }
-
-    ;
 
     public List<Prodotto> doRetrieveByPopolareLimit(OrderByPopolari order, int i, int perpag) {
         ArrayList<Prodotto> list = new ArrayList<>();
@@ -677,8 +648,6 @@ public class ProdottoDAO {
         }
     }
 
-    ;
-
     public ArrayList<Prodotto> doRetrieveByVenduti(OrderByVenduti ord, int offset, int limit) {
         ArrayList<Prodotto> list = new ArrayList<Prodotto>();
         try (Connection con = ConPool.getConnection()) {
@@ -709,7 +678,6 @@ public class ProdottoDAO {
         return list;
     }
 
-
     public enum OrderBy {
         DEFAULT(""), PREZZO_ASC("ORDER BY prezzo ASC"), PREZZO_DESC("ORDER BY prezzo DESC");
         private String sql;
@@ -718,8 +686,6 @@ public class ProdottoDAO {
             this.sql = sql;
         }
     }
-
-    ;
 
     public int countByCategoria(int categoria) {
         try (Connection con = ConPool.getConnection()) {
@@ -787,7 +753,6 @@ public class ProdottoDAO {
 
     public void doSaveProdotto(int uID, int pID, String data_vis) {
         try (Connection con = ConPool.getConnection()) {
-//            PreparedStatement ps = con.prepareStatement("INSERT INTO utenteprodotti VALUES (?, ?,? ,1)");
             PreparedStatement ps = con.prepareStatement("INSERT INTO utenteprodotti (uid, pid, data_vis, visual) VALUES (?, ?, ?, 1)");
             ps.setInt(1, uID);
             ps.setInt(2, pID);
@@ -829,7 +794,7 @@ public class ProdottoDAO {
         return list;
     }
 
-    public List<Prodotto> doRetrieveByNome(String against, OrderBy ord,int offset, int limit) {
+    public List<Prodotto> doRetrieveByNome(String against, OrderBy ord, int offset, int limit) {
         ArrayList<Prodotto> prodotti = new ArrayList<>();
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = null;
@@ -840,13 +805,9 @@ public class ProdottoDAO {
                 ps.setInt(2, offset);
                 ps.setInt(3, limit);
             }else{
-/*                ps= con.prepareStatement(
-                        "SELECT id, nome, descrizione, prezzo,sconto,images FROM prodotto WHERE MATCH(nome) AGAINST(? IN BOOLEAN MODE) LIMIT ?, ?");
- */
                 ps= con.prepareStatement(
-                        "SELECT id, nome, descrizione, prezzo,sconto,images FROM prodotto WHERE nome LIKE nome");
-
-                ps.setString(1, against);
+                        "SELECT id, nome, descrizione, prezzo,sconto,images FROM prodotto WHERE nome LIKE ? LIMIT ?, ?");
+                ps.setString(1, "%" + against + "%");
                 ps.setInt(2, offset);
                 ps.setInt(3, limit);
             }

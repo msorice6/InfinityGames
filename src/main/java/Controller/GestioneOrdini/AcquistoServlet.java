@@ -20,7 +20,6 @@ public class AcquistoServlet extends HttpServlet {
     private OrdiniDAO ordiniDAO = new OrdiniDAO();
 
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
         doGet(request, response);
     }
 
@@ -30,7 +29,6 @@ public class AcquistoServlet extends HttpServlet {
 
         System.out.println("id utente: " + utente.getId());
         if (utente != null) {
-
 
             if (request.getParameter("conf-acq") != null) {
 
@@ -50,49 +48,40 @@ public class AcquistoServlet extends HttpServlet {
                 Ordini ordine = new Ordini();
                 ordine.setUtente(utente.getId());
                 ordine.setProdotti(lis);
-
                 ordine.setData(s);
                 ordine.setTotale(carrello.getPrezzoTotCent());
 
-
                 ordiniDAO.doSave(ordine);
 
-                // salva nel database la quantita' del prodotto
+                // salva nel database la quantita' del prodotto venduta
                 for (int i = 0; i < lis.size(); i++) {
                     ProdottoDAO.setQuantita(lis.get(i).getProdotto().getId(), lis.get(i).getQuantita());
                 }
 
-                // salva nella libreria dell'utente i prodotti nel carrello e rimuove i prodotti dal carrello
-                    Collection<Carrello.ProdottoQuantita> listaProdotti = carrello.getProdotti();
-                    for (Carrello.ProdottoQuantita pq : listaProdotti) {
-                        // Estraggo il prodotto dall'oggetto wrapper
-                        Prodotto p = pq.getProdotto();
+                // salva nella libreria dell'utente i prodotti nel carrello (con quantità)
+                Collection<Carrello.ProdottoQuantita> listaProdotti = carrello.getProdotti();
+                for (Carrello.ProdottoQuantita pq : listaProdotti) {
+                    // Estraggo il prodotto dall'oggetto wrapper
+                    Prodotto p = pq.getProdotto();
+                    int quantitaAcquistata = pq.getQuantita();
 
-                        // Stampo l'ID (che corrisponde all'idProdotto nel DB)
-                        System.out.println("ID Prodotto: " + p.getId() + " - Nome: " + p.getNome());
+                    System.out.println("ID Prodotto: " + p.getId() + " - Nome: " + p.getNome() + " - Quantità: " + quantitaAcquistata);
 
-                        //Se il prodotto e' gia' memorizzato nella libreria non lo memorizza
-                        if (!prodottoDAO.isPresenteInLibreria(p.getId(), carrello.getIdUtente())) {
-                            prodottoDAO.doSaveInLibreria(p, carrello.getIdUtente());
-                        }
-
-
-//                        carrello.remove(p.getId());
-                    }
-                    CarrelloDAO.doDeleteAll(carrello);
-                    carrello.getProdotti().clear();
-
-
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/results/AcquistoSuccesso.jsp");
-                    dispatcher.forward(request, response);
-
-
-                } else {
-
-
-                    RequestDispatcher dispatcher = request.getRequestDispatcher("./login.jsp");
-                    dispatcher.forward(request, response);
+                    // Salva in libreria con la quantità acquistata (il metodo gestisce già l'incremento)
+                    prodottoDAO.doSaveInLibreria(p, carrello.getIdUtente(), quantitaAcquistata);
                 }
+
+                // Svuota il carrello
+                CarrelloDAO.doDeleteAll(carrello);
+                carrello.getProdotti().clear();
+
+                RequestDispatcher dispatcher = request.getRequestDispatcher("WEB-INF/results/AcquistoSuccesso.jsp");
+                dispatcher.forward(request, response);
+
+            } else {
+                RequestDispatcher dispatcher = request.getRequestDispatcher("./login.jsp");
+                dispatcher.forward(request, response);
             }
         }
     }
+}

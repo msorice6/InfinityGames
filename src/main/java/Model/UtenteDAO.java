@@ -109,26 +109,26 @@ public class UtenteDAO {
         }
     }
 
-    public List<Prodotto> getLibreria(int idUtente)  {
-        try(Connection con= ConPool.getConnection()){
-
-            PreparedStatement ps=
-                    con.prepareStatement("SELECT idProdotto,nome,descrizione,images FROM libreria WHERE idUtente=?");
-            ps.setInt(1,idUtente);
-            ArrayList<Prodotto> lista= new ArrayList<>();
-            ResultSet rs= ps.executeQuery();
-            while (rs.next()){
-                Prodotto p= new Prodotto();
-                p.setId(rs.getInt(1));
-                p.setNome(rs.getString(2));
-                p.setDescrizione(rs.getString(3));
-                p.setImages(rs.getString(4));
-                lista.add(p);
+    public List<Prodotto> getLibreria(int idUtente) {
+        List<Prodotto> libreria = new ArrayList<>();
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT idProdotto, nome, images, quantita FROM libreria WHERE idUtente = ?"
+            );
+            ps.setInt(1, idUtente);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Prodotto p = new Prodotto();
+                p.setId(rs.getInt("idProdotto"));
+                p.setNome(rs.getString("nome"));
+                p.setImages(rs.getString("images"));
+                p.setQuantitaPosseduta(rs.getInt("quantita")); // Aggiungi la quantità
+                libreria.add(p);
             }
-            return lista;
-        }catch (SQLException e){
-            throw  new RuntimeException(e);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+        return libreria;
     }
 
     public Utente doRetrieveByUsernamePassword(String username, String password){
