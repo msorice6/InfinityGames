@@ -15,6 +15,8 @@ public class Prodotto {
     private int sconto;
     private String data;
     private int visual;
+    private int quantitaPosseduta;
+
     private String images;
     private String video;
 
@@ -96,6 +98,14 @@ public class Prodotto {
 
     public void setVisual(int visual) {
         this.visual = visual;
+    }
+
+    public int getQuantitaPosseduta() {
+        return quantitaPosseduta;
+    }
+
+    public void setQuantitaPosseduta(int quantitaPosseduta) {
+        this.quantitaPosseduta = quantitaPosseduta;
     }
 
     public String getVideo() {
