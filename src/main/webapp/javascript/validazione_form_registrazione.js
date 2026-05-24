@@ -5,7 +5,8 @@ var passwordOk = false;
 var emailOk = false;
 
 function validaUsername() {
-    var input = document.forms['registrazione']['username'];
+//    var input = document.forms['registrazione']['username'];
+    var input = document.getElementById("username");
 
     if (input && input.value && input.value.length >= 6 && input.value.match(/^[0-9a-zA-Z]+$/)) {
         // verifica se esiste un utente con lo stesso username
@@ -30,8 +31,10 @@ function validaUsername() {
 }
 
 function validaPassword() {
-    var inputpw = document.forms['registrazione']['password'];
-    var inputpwconf = document.forms['registrazione']['passwordConferma'];
+    var inputpw =document.getElementById("password");
+    var inputpwconf =document.getElementById("passwordConferma");
+//    var inputpw = document.forms['registrazione']['password'];
+//    var inputpwconf = document.forms['registrazione']['passwordConferma'];
 
     if (!inputpw || !inputpwconf) {
         passwordOk = false;
@@ -65,7 +68,8 @@ function validaPassword() {
 }
 
 function validaEmail() {
-    var input = document.forms['registrazione']['email'];
+    var inputpwconf =document.getElementById("email");
+//    var input = document.forms['registrazione']['email'];
 
     if (!input) {
         emailOk = false;

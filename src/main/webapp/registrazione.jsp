@@ -14,25 +14,25 @@
                 <label>Username (almeno 6 caratteri, solo lettere e numeri, non utilizzato da altri utenti)</label><br>
                 <div class="input-container">
                     <i class="fa fa-user icon"></i>
-                    <input class="input-field" type="text" placeholder="Username" name="username"
+                    <input class="input-field" type="text" placeholder="Username" id = "username" name="username"
                            oninput="validaUsername()">
                 </div>
                 <label>Email (diversa da quella di utenti esistenti)</label><br>
                 <div class="input-container">
                     <i class="fa fa-envelope icon"></i>
-                    <input class="input-field" type="text" placeholder="Email" name="email" oninput="validaEmail()">
+                    <input class="input-field" type="text" placeholder="Email"  id = "email"  name="email" oninput="validaEmail()">
                 </div>
                 <label>Password (almeno 8 caratteri, deve contenere: una lettera maiuscola, una minuscola, un
                     numero)</label><br>
                 <div class="input-container">
                     <i class="fa fa-key icon"></i>
-                    <input class="input-field" type="password" placeholder="Password" name="password"
+                    <input class="input-field" type="password" placeholder="Password" id = "password" name="password"
                            oninput="validaPassword()">
                 </div>
                 <label>Password (conferma)</label><br>
                 <div class="input-container">
                     <i class="fa fa-key icon"></i>
-                    <input class="input-field" type="password" placeholder="Password" name="passwordConferma"
+                    <input class="input-field" type="password" placeholder="Password" id="passwordConferma" name="passwordConferma"
                            oninput="validaPassword()">
                 </div>
                 <input id="registrami" type="submit" class="btn" value="Registrami" disabled>

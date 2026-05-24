@@ -28,15 +28,15 @@
 
                             <div class="form-info">
                                 <div><label>Password Precedente</label></div>
-                                <div><input type="password" name="passwordPrecedente" oninput="validaPasswordPrecedente()"></div>
+                                <div><input type="password" name="passwordPrecedente" id ="passwordPrecedente"  oninput="validaPasswordPrecedente()"></div>
                             </div>
                         <div class="form-info">
                             <div><label>Modifica Password </label></div>
-                            <div><input type="password" name="password" oninput="validaPasswordProfilo()"></div>
+                            <div><input type="password" name="password" id = "password" oninput="validaPasswordProfilo()"></div>
                         </div>
                         <div class="form-info">
                             <div><label>Password (conferma)</label></div>
-                            <div><input type="password" name="passwordConferma"  oninput="validaPasswordProfilo()"></div>
+                            <div><input type="password" name="passwordConferma" id = "passwordConferma"  oninput="validaPasswordProfilo()"></div>
                         </div>
                         <div>
                             <input id="salva" name="salvaModifiche" type="submit" value="Salva" disabled>

@@ -7,8 +7,8 @@ var img= false;
 var video = false;
 
 function validaCat() {
-
-    var input = document.forms['admin-form']['categorie'];
+    var input = document.getElementById("categorie");
+//    var input = document.forms['admin-form']['categorie'];
     if (input != null) {
         categoria = true;
     }
@@ -16,7 +16,8 @@ function validaCat() {
 }
 function validaNome() {
 
-    var input = document.forms['admin-form']['nome'];
+    var input = document.getElementById("nome");
+//    var input = document.forms['admin-form']['nome'];
     if (input != null){
              nome = true;
     }
@@ -26,7 +27,8 @@ function validaNome() {
 function validaDesc() {
 
 
-    var input = document.forms['admin-form']['descrizione'];
+    var input = document.getElementById("descrizione");
+//    var input = document.forms['admin-form']['descrizione'];
     if (input!= null) {
         descrizione = true;
     }
@@ -34,7 +36,8 @@ function validaDesc() {
 }
 function validaSconto() {
 
-    var input = document.forms['admin-form']['sconto'];
+    var input = document.getElementById("sconto");
+//    var input = document.forms['admin-form']['sconto'];
     if (input != null) {
         sconto = true;
     }
@@ -42,7 +45,8 @@ function validaSconto() {
 }
 function validaImg() {
 
-    var input = document.forms['admin-form']['file'];
+    var input = document.getElementById("file");
+//    var input = document.forms['admin-form']['file'];
     if (input != null) {
         img = true;
     }
@@ -50,7 +54,8 @@ function validaImg() {
 }
 function validaPrezzo() {
 
-    var input = document.forms['admin-form']['prezzoCent'];
+    var input = document.getElementById("prezzoCent");
+//    var input = document.forms['admin-form']['prezzoCent'];
     if (input!= null) {
         prezzo = true;
     }
@@ -58,7 +63,8 @@ function validaPrezzo() {
 }
 function validaVideo() {
 
-    var input = document.forms['admin-form']['video'];
+    var input = document.getElementById("video");
+//    var input = document.forms['admin-form']['video'];
     if (input != null) {
         video = true;
     }

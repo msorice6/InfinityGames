@@ -5,7 +5,8 @@ var borderNo = '2px solid #f00';
 
 
 function validaPasswordPrecedente(){
-    var inputPassPrec = document.forms['modifica']['passwordPrecedente'];
+    var inputpw =document.getElementById("passwordPrecedente");
+//    var inputPassPrec = document.forms['modifica']['passwordPrecedente'];
     var passPrec = inputPassPrec.value;
     if (passPrec.length >= 8 && passPrec.toUpperCase() != passPrec
         && passPrec.toLowerCase() != passPrec && /[0-9]/.test(passPrec)) {
@@ -38,8 +39,10 @@ function validaPasswordPrecedente(){
 
 
 function validaPasswordProfilo() {
-    var inputpw = document.forms['modifica']['password'];
-    var inputpwconf = document.forms['modifica']['passwordConferma'];
+    var inputpw =document.getElementById("password");
+    var inputpw =document.getElementById("passwordConferma");
+//    var inputpw = document.forms['modifica']['password'];
+//    var inputpwconf = document.forms['modifica']['passwordConferma'];
     var password = inputpw.value;
     if (password.length >= 8 && password.toUpperCase() != password
             && password.toLowerCase() != password && /[0-9]/.test(password)) {

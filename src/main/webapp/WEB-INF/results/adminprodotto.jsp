@@ -22,28 +22,28 @@
             <div class="add">
             <label style="display: block">Inserisci le Categorie:</label>
             <c:forEach items="${categorie}" var="categoria">
-                <input type="checkbox" name="categorie" value="${categoria.id}"
+                <input type="checkbox" name="categorie" id = "categorie" value="${categoria.id}"
                        <c:if test="${operazione != 'Modifica'}">oninput="validaCat()"</c:if><c:if test="${prodotto.categorie.stream().anyMatch(c -> c.id == categoria.id).orElse(false)}">checked</c:if>><label>${categoria.nome}</label>
             </c:forEach>
             </div>
             <div class="add">
             <label style="display: block">Nome:</label>
-            <input type="text" name="nome" value="${prodotto.nome}" <c:if test="${operazione != 'Modifica'}">oninput="validaNome()"</c:if>>
+            <input type="text" name="nome" id = "nome" value="${prodotto.nome}" <c:if test="${operazione != 'Modifica'}">oninput="validaNome()"</c:if>>
             <label style="display: block">Descrizione:</label>
-            <textarea name="descrizione" <c:if test="${operazione != 'Modifica'}">oninput="validaDesc()"</c:if>>${prodotto.descrizione}</textarea>
+            <textarea name="descrizione" id = "descrizione" <c:if test="${operazione != 'Modifica'}">oninput="validaDesc()"</c:if>>${prodotto.descrizione}</textarea>
             <label style="display: block">Prezzo:</label>
-            <input type="number" name="prezzoCent" value="${prodotto.prezzo}" <c:if test="${operazione != 'Modifica'}">oninput= "validaPrezzo()"</c:if>><br>
+            <input type="number" name="prezzoCent" id ="prezzoCent"  value="${prodotto.prezzo}" <c:if test="${operazione != 'Modifica'}">oninput= "validaPrezzo()"</c:if>><br>
             <label style="display: block">Sconto:</label>
-            <input type="number" name="sconto" value="${prodotto.sconto}"<c:if test="${operazione != 'Modifica'}"> oninput="validaSconto()"</c:if>>
+            <input type="number" name="sconto" id = "sconto" value="${prodotto.sconto}"<c:if test="${operazione != 'Modifica'}"> oninput="validaSconto()"</c:if>>
             </div>
             <div class="add">
             <label>Carica Immagine: </label>
 
-            <input type="file" name="file"  <c:if test="${operazione != 'Modifica'}">oninput="validaImg()" </c:if>><br>
+            <input type="file" name="file" id = "file" <c:if test="${operazione != 'Modifica'}">oninput="validaImg()" </c:if>><br>
             </div>
             <div class="add">
             <label>Carica video: </label>
-            <input type="file" name="video" <c:if test="${operazione != 'Modifica'}">oninput="validaVideo()" </c:if>>
+            <input type="file" name="video" id = "video" <c:if test="${operazione != 'Modifica'}">oninput="validaVideo()" </c:if>>
             </div>
             <input id="modifica" type="submit"  name="operazioneProdotto"  value="${operazione}" <c:if test="${operazione != 'Modifica'}">disabled</c:if>>
             <c:if test="${prodotto != null}">
