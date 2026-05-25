@@ -68,13 +68,13 @@ public class AdminCategoriaServlet extends HttpServlet {
             String nome = request.getParameter("nome");
             if (nome != null && !nome.equals("") && descrizione != null && !descrizione.equals("")) { // modifica/aggiunta categoria
 
-                if(!(nome.matches("[a-zA-Z ]+"))){
-                    throw new MyServletException("Formato nome non valido");
+                if(!(nome.equals(""))){
+                    throw new MyServletException("Campo nome vuoto");
                 }
 
 
-                if(!(descrizione.matches("[a-zA-Z ]+"))){
-                    throw new MyServletException("Formato descrizione non valido");
+                if(!(descrizione.equals(""))){
+                    throw new MyServletException("Campo descrizione vuoto");
                 }
 
                 if (categoria == null) { // aggiunta nuova categoria

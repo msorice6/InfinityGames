@@ -55,15 +55,9 @@ public class AdminProdottoServlet extends HttpServlet {
                 if(nome.equals("")){
                     throw new MyServletException("Campo nome vuoto");
                 }
-                if(!(nome.matches("[a-zA-Z0-9 ]+"))){
-                    throw new MyServletException("Formato nome non valido");
-                }
                 prodotto.setNome(nome);
                 if(descrizione.equals("")){
                     throw new MyServletException("Campo descrizione vuoto");
-                }
-                if(!(descrizione.matches("[a-zA-Z ]+"))){
-                    throw new MyServletException("Formato descrizione non valido");
                 }
                 prodotto.setDescrizione(descrizione);
                 double scont;

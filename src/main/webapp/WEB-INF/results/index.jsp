@@ -42,22 +42,21 @@
                         <li class="nav-item">
                             <a href="#" class="accordion">IL TUO NEGOZIO</a>
                             <div class="dropdown-menu">
-                                <!-- RIMOSSO "In sconto" da qui -->
                                 <a class="dropdown-item" href="Recenti">Visualizzati di recente</a>
                             </div>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="accordion">GIOCHI</a>
                             <div class="dropdown-menu">
-                                <a class="dropdown-item" href="Sconto">In sconto</a>
-                                <a class="dropdown-item" href="Venduti">Piu venduti</a>
+                                <a class="dropdown-item" href="Negozio?ord=PREZZO_ASC">In sconto</a>
+                                <a class="dropdown-item" href="Negozio?ord=VENDUTI_DESC">Più venduti</a>
                             </div>
                         </li>
                         <li class="nav-item">
                             <a href="#" class="accordion">CATEGORIA</a>
                             <div class="dropdown-menu">
                                 <c:forEach items="${applicationScope.categorie}" var="categoria">
-                                    <a class="dropdown-item" href="CategoriaServlet?id=${categoria.id}">${categoria.nome}</a>
+                                    <a class="dropdown-item" href="Negozio?categoria=${categoria.id}">${categoria.nome}</a>
                                 </c:forEach>
                             </div>
                         </li>
@@ -99,7 +98,7 @@
                     </a>
                     <h4>SFOGLIA PER GENERE</h4>
                     <c:forEach items="${applicationScope.categorie}" var="categoria">
-                        <a class="vertical_item" href="CategoriaServlet?id=${categoria.id}">${categoria.nome}</a>
+                        <a class="vertical_item" href="Negozio?categoria=${categoria.id}">${categoria.nome}</a>
                     </c:forEach>
                 </div>
             </section>

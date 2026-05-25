@@ -6,26 +6,24 @@ import java.util.ArrayList;
 public class CategoriaDAO {
 
 
-            public ArrayList<Categoria> doRetrieveAll(){
-            try (Connection con = ConPool.getConnection()) {
-                PreparedStatement ps =
-                        con.prepareStatement("SELECT  id,nome, descrizione FROM Categoria ");
-                ResultSet rs = ps.executeQuery();
-                ArrayList<Categoria> list= new ArrayList<Categoria>();
-                while (rs.next()) {
-
-                    Categoria p = new Categoria();
-                    p.setId(rs.getInt(1));
-                    p.setNome(rs.getString(2));
-                    p.setDescrizione(rs.getString(3));
-                    list.add(p);
-
-                }
-                return list;
-            } catch (SQLException e) {
-                throw new RuntimeException(e);
+    public ArrayList<Categoria> doRetrieveAll() {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps =
+                    con.prepareStatement("SELECT id, nome, descrizione FROM Categoria ORDER BY nome ASC");
+            ResultSet rs = ps.executeQuery();
+            ArrayList<Categoria> list = new ArrayList<Categoria>();
+            while (rs.next()) {
+                Categoria p = new Categoria();
+                p.setId(rs.getInt(1));
+                p.setNome(rs.getString(2));
+                p.setDescrizione(rs.getString(3));
+                list.add(p);
             }
+            return list;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
         }
+    }
 
     public void doSave(Categoria categoria) {
         try (Connection con = ConPool.getConnection()) {

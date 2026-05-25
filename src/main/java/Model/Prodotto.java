@@ -80,6 +80,7 @@ public class Prodotto {
         return quant_vend;
     }
 
+
     public void setQuant_vend(int quant_vend) {
         this.quant_vend = quant_vend;
     }
@@ -134,4 +135,12 @@ public class Prodotto {
     public void setImages(String images) {
         this.images = images;
     }
+
+    public double getPrezzoScontato() {
+        if (sconto > 0) {
+            return prezzo - (prezzo * sconto / 100.0);
+        }
+        return prezzo;
+    }
 }
+
