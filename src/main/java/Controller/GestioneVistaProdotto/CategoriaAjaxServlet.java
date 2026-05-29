@@ -33,8 +33,6 @@ public class CategoriaAjaxServlet extends HttpServlet {
         List<Categoria> categorie = (List<Categoria>) getServletContext().getAttribute("categorie");
 
 
-
-
         if (ricerca != null && !ricerca.equals("") && id!= null && !id.equals("")) {
             int parametro;
             int idCat;

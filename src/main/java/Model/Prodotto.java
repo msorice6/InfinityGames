@@ -25,10 +25,10 @@ public class Prodotto {
     }
 
     public Prodotto(int id, String nome, String descrizione, double prezzo){
-     this.id=id;
-     this.nome=nome;
-     this.descrizione=descrizione;
-     this.prezzo=prezzo;
+        this.id=id;
+        this.nome=nome;
+        this.descrizione=descrizione;
+        this.prezzo=prezzo;
     }
 
     public int getId() {
@@ -79,6 +79,7 @@ public class Prodotto {
     public int getQuant_vend() {
         return quant_vend;
     }
+
 
     public void setQuant_vend(int quant_vend) {
         this.quant_vend = quant_vend;
@@ -134,4 +135,12 @@ public class Prodotto {
     public void setImages(String images) {
         this.images = images;
     }
+
+    public double getPrezzoScontato() {
+        if (sconto > 0) {
+            return prezzo - (prezzo * sconto / 100.0);
+        }
+        return prezzo;
+    }
 }
+

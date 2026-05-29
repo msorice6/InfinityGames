@@ -46,12 +46,6 @@ public class CategoriaServlet extends HttpServlet {
                 throw new MyServletException("Nessuna Categoria trovata");
             }
 
-
-
-
-
-
-
             request.setAttribute("categoria", categorie.stream().filter(c -> c.getId() == id).findAny().get());
 
             String pagstr = request.getParameter("pag");
