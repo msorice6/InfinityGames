@@ -596,8 +596,8 @@ public class ProdottoDAO {
     public enum OrderByNegozio {
         ALFABETICO_ASC("ORDER BY p.nome ASC"),
         ALFABETICO_DESC("ORDER BY p.nome DESC"),
-        PREZZO_ASC("ORDER BY p.prezzo ASC"),
-        PREZZO_DESC("ORDER BY p.prezzo DESC"),
+        PREZZO_ASC("ORDER BY (prezzo - (prezzo * sconto / 100)) ASC"),
+        PREZZO_DESC("ORDER BY (prezzo - (prezzo * sconto / 100)) DESC"),
         VENDUTI_ASC("ORDER BY p.quant_vend ASC"),
         VENDUTI_DESC("ORDER BY p.quant_vend DESC");
 
@@ -780,7 +780,11 @@ public class ProdottoDAO {
     }
 
     public enum OrderBy {
-        DEFAULT(""), PREZZO_ASC("ORDER BY prezzo ASC"), PREZZO_DESC("ORDER BY prezzo DESC");
+        DEFAULT(""),
+        PREZZO_ASC("ORDER BY (prezzo - (prezzo * sconto / 100)) ASC;"),
+        PREZZO_DESC("ORDER BY (prezzo - (prezzo * sconto / 100)) DESC;");
+//        PREZZO_ASC("ORDER BY prezzo ASC"),
+//        PREZZO_DESC("ORDER BY prezzo DESC");
         private String sql;
 
         private OrderBy(String sql) {

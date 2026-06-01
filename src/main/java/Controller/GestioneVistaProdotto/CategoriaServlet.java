@@ -35,10 +35,12 @@ public class CategoriaServlet extends HttpServlet {
                 throw new MyServletException("Id categoria non valido");
             }
 
+            Categoria svCat = null;
             int flag=0;
             for (Categoria c: categorie){
                 if (c.getId()==id){
                     flag=1;
+                    svCat=c;
                     break;
                 }
             }
@@ -46,7 +48,13 @@ public class CategoriaServlet extends HttpServlet {
                 throw new MyServletException("Nessuna Categoria trovata");
             }
 
-            request.setAttribute("categoria", categorie.stream().filter(c -> c.getId() == id).findAny().get());
+
+            if(flag == 1){
+                request.setAttribute("categoria", svCat);
+
+            }
+
+            // request.setAttribute("categoria", categorie.stream().filter(c -> c.getId() == id).findAny().get());
 
             String pagstr = request.getParameter("pag");
             int pag;
@@ -75,7 +83,6 @@ public class CategoriaServlet extends HttpServlet {
 
             List<Prodotto> prodotti = service.doRetrieveByIdCat(id, ord, (pag - 1) * perpag, perpag);
             request.setAttribute("prodotti", prodotti);
-
 
             RequestDispatcher dispatcher = request.getRequestDispatcher("/WEB-INF/results/categoria.jsp");
             dispatcher.forward(request, response);
