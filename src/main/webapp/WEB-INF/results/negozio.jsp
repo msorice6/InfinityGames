@@ -88,27 +88,34 @@
           </c:forEach>
         </div>
 
-        <!-- PAGINAZIONE -->
-        <div class="paginazione">
-          <c:if test="${pag > 1}">
-            <a href="?categoria=${categoriaId}&ord=${ord}&pag=${pag - 1}&perpag=${perpag}">&larr; precedente</a>
-          </c:if>
-          &emsp;
-          <c:forEach begin="1" end="${npag}" var="i">
-            <c:choose>
-              <c:when test="${i == pag}">
-                <b>${i}</b>
-              </c:when>
-              <c:otherwise>
-                <a href="?categoria=${categoriaId}&ord=${ord}&pag=${i}&perpag=${perpag}">${i}</a>
-              </c:otherwise>
-            </c:choose>
-          </c:forEach>
-          &emsp;
-          <c:if test="${pag < npag}">
-            <a href="?categoria=${categoriaId}&ord=${ord}&pag=${pag + 1}&perpag=${perpag}">successiva &rarr;</a>
-          </c:if>
-        </div>
+          <!-- PAGINAZIONE -->
+          <div class="paginazione">
+
+
+              <c:if test="${npag > 1}"> <!-- controlla se funziona -->
+                  <c:if test="${pag > 1}">
+                      <a href="?categoria=${categoriaId}&ord=${ord}&pag=${pag - 1}&perpag=${perpag}">&larr;
+                          precedente</a>
+                  </c:if>
+                  &emsp;
+                  <c:forEach begin="1" end="${npag}" var="i">
+                      <c:choose>
+                          <c:when test="${i == pag}">
+                              <b>${i}</b>
+                          </c:when>
+                          <c:otherwise>
+                              <a href="?categoria=${categoriaId}&ord=${ord}&pag=${i}&perpag=${perpag}">${i}</a>
+                          </c:otherwise>
+                      </c:choose>
+                  </c:forEach>
+                  &emsp;
+                  <c:if test="${pag < npag}">
+                      <a href="?categoria=${categoriaId}&ord=${ord}&pag=${pag + 1}&perpag=${perpag}">successiva
+                          &rarr;</a>
+                  </c:if>
+            </c:if>  <!-- controlla se funziona -->
+
+          </div>
 
       </c:when>
       <c:otherwise>
