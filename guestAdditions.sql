@@ -29,6 +29,8 @@ CREATE TABLE Prodotto (
                           sconto INT NOT NULL DEFAULT 0,
                           images VARCHAR(255) NULL,
                           video VARCHAR(255) NULL
+                            FULLTEXT (nome)
+
 );
 
 CREATE TABLE carrello (

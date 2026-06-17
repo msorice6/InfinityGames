@@ -13,33 +13,43 @@
     <p>Scopri tutti i nostri prodotti, ordina e filtra per categoria.</p>
 
     <!-- BARRA DI ORDINAMENTO E FILTRO - VERSIONE CON FORM -->
-    <form method="get" action="Negozio" id="filtroForm">
-      <div class="filtri-ordine">
-        <div class="ordine-group">
-          <label for="ordineSelect">Ordina per:</label>
-          <select name="ord" id="ordineSelect" onchange="this.form.submit()">
-            <option value="ALFABETICO_ASC" ${ord == 'ALFABETICO_ASC' ? 'selected' : ''}>A-Z</option>
-            <option value="ALFABETICO_DESC" ${ord == 'ALFABETICO_DESC' ? 'selected' : ''}>Z-A</option>
-            <option value="PREZZO_ASC" ${ord == 'PREZZO_ASC' ? 'selected' : ''}>Prezzo: dal più basso</option>
-            <option value="PREZZO_DESC" ${ord == 'PREZZO_DESC' ? 'selected' : ''}>Prezzo: dal più alto</option>
-            <option value="VENDUTI_ASC" ${ord == 'VENDUTI_ASC' ? 'selected' : ''}>Meno venduti</option>
-            <option value="VENDUTI_DESC" ${ord == 'VENDUTI_DESC' ? 'selected' : ''}>Più venduti</option>
-          </select>
-        </div>
+      <form method="get" action="Negozio" id="filtroForm">
+          <div class="filtri-ordine">
+              <div class="ordine-group">
+                  <label for="ordineSelect">Ordina per:</label>
+                  <select name="ord" id="ordineSelect" onchange="this.form.submit()">
+                      <option value="ALFABETICO_ASC" ${ord == 'ALFABETICO_ASC' ? 'selected' : ''}>A-Z</option>
+                      <option value="ALFABETICO_DESC" ${ord == 'ALFABETICO_DESC' ? 'selected' : ''}>Z-A</option>
+                      <option value="PREZZO_ASC" ${ord == 'PREZZO_ASC' ? 'selected' : ''}>Prezzo: dal più basso</option>
+                      <option value="PREZZO_DESC" ${ord == 'PREZZO_DESC' ? 'selected' : ''}>Prezzo: dal più alto
+                      </option>
+                      <option value="VENDUTI_ASC" ${ord == 'VENDUTI_ASC' ? 'selected' : ''}>Meno venduti</option>
+                      <option value="VENDUTI_DESC" ${ord == 'VENDUTI_DESC' ? 'selected' : ''}>Più venduti</option>
+                  </select>
+              </div>
 
-        <div class="filtro-group">
-          <label for="categoriaSelect">Categoria:</label>
-          <select name="categoria" id="categoriaSelect" onchange="this.form.submit()">
-            <option value="0">Tutte le categorie</option>
-            <c:forEach items="${categorie}" var="cat">
-              <option value="${cat.id}" ${categoriaId == cat.id ? 'selected' : ''}>${cat.nome}</option>
-            </c:forEach>
-          </select>
-        </div>
+              <div class="filtro-group">
+                  <label for="categoriaSelect">Categoria:</label>
+                  <select name="categoria" id="categoriaSelect" onchange="this.form.submit()">
+                      <option value="0">Tutte le categorie</option>
+                      <c:forEach items="${categorie}" var="cat">
+                          <option value="${cat.id}" ${categoriaId == cat.id ? 'selected' : ''}>${cat.nome}</option>
+                      </c:forEach>
+                  </select>
+              </div>
+
+          </div>
+      </form>
+
+      <form method="get" action="Prodotto" id="filtroForm">
+      <div class="ordine-group" bis_skin_checked="1">
+              <label> ricerca </label>
+              <input type="text" name="id" list="ricerca-datalist" placeholder="Ricerca" onkeyup="ricerca(this.value)" value="<c:out value="${param.q}" />">
+              <button type="submit"><img src="./images/search.png" width="15px" height="15px"></button>
+              <datalist id="ricerca-datalist"></datalist>
       </div>
-    </form>
 
-    <c:choose>
+      <c:choose>
       <c:when test="${prodotti.size() > 0}">
 
         <!-- CONTENITORE PRODOTTI -->

@@ -936,6 +936,45 @@ public class ProdottoDAO {
         return prodotti;
     }
 
+    public List<Prodotto> doRetrieveByNomeRicerca(String against, OrderBy ord,int offset, int limit) {
+        ArrayList<Prodotto> prodotti = new ArrayList<>();
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = null;
+            if(ord != null) {
+                ps= con.prepareStatement(
+                        "SELECT id, nome, descrizione, prezzo,sconto,images FROM prodotto WHERE MATCH(nome) AGAINST(? IN BOOLEAN MODE) " + ord.sql + " LIMIT ?, ?");
+                ps.setString(1, against);
+                ps.setInt(2, offset);
+                ps.setInt(3, limit);
+            }else{
+                ps= con.prepareStatement(
+                        "SELECT id, nome, descrizione, prezzo,sconto,images FROM prodotto WHERE MATCH(nome) AGAINST(? IN BOOLEAN MODE) LIMIT ?, ?");
+                ps.setString(1, against);
+                ps.setInt(2, offset);
+                ps.setInt(3, limit);
+            }
+
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Prodotto p = new Prodotto();
+                p.setId(rs.getInt(1));
+                p.setNome(rs.getString(2));
+                p.setDescrizione(rs.getString(3));
+                p.setPrezzo(rs.getLong(4));
+                p.setSconto(rs.getInt(5));
+                p.setImages(rs.getString(6));
+                p.setCategorie(getCategorie(con, p.getId()));
+                prodotti.add(p);
+            }
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return prodotti;
+    }
+
+
+
     public void doDeleteByNomeForTesting(String nomeProdotto){
         try (Connection con = ConPool.getConnection()) {
             PreparedStatement ps = con.prepareStatement("DELETE FROM Prodotto WHERE nome=?");

@@ -14,7 +14,6 @@ import java.util.List;
 
 @WebServlet("/RicercaAjax")
 public class RicercaAjaxServlet extends HttpServlet {
-
     private final ProdottoDAO prodottoDAO = new ProdottoDAO();
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
 
@@ -22,18 +21,29 @@ public class RicercaAjaxServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        System.out.println("ciao");
 
         JSONArray prodJson = new JSONArray();
         String query = request.getParameter("q");
         if (query != null) {
-            List<Prodotto> prodotti = prodottoDAO.doRetrieveByNome(query + "*", null,0, 10);
+            List<Prodotto> prodotti = prodottoDAO.doRetrieveByNomeRicerca(query + "*", null,0, 10);
 
             for (Prodotto p : prodotti) {
+                System.out.println(p.getNome());
 
                 prodJson.put(p.getNome());
+
+//                JSONObject obj = new JSONObject();
+//                obj.put("id", p.getId());
+//                obj.put("nome", p.getNome());
+//                prodJson.put(obj);
+
+
             }
+
             response.setContentType("application/json");
             response.getWriter().append(prodJson.toString());
+
         }else {
             throw new MyServletException("parametro non valido");
         }
