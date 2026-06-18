@@ -29,7 +29,7 @@
               </div>
 
               <div class="filtro-group">
-<%--                  <label for="categoriaSelect">Categoria:</label>--%>
+                  <label for="categoriaSelect">Categoria:</label>
                   <select name="categoria" id="categoriaSelect" onchange="this.form.submit()">
                       <option value="0">Tutte le categorie</option>
                       <c:forEach items="${categorie}" var="cat">
@@ -44,17 +44,23 @@
       <form method="get" action="Prodotto" id="filtroForm">
           <div class="ordine-group" bis_skin_checked="1">
               <label> ricerca </label>
-              <input type="text" name="id" id = "input" list="ricerca-datalist" placeholder="Ricerca" onkeyup="ricerca(this.value)"
+              <input type="text" id = "inputText" name="id" list="ricerca-datalist" placeholder="Ricerca" onkeyup="ricerca(this.value)"
                      value="<c:out value="${param.q}" />">
               <button type="submit" onclick="forzaReindirizzamento(event)">
                   <img src="./images/search.png" width="15px" height="15px">
               </button>
               <datalist id="ricerca-datalist"></datalist>
               <br>
-              <p id="risultati"style="display: block;" > risultati in p </p>
+              <p id="risultati"style="display: none;" > risultati in p </p>
           </div>
       </form>
-
+<%--      <script>--%>
+<%--          function forzaReindirizzamento(event) {--%>
+<%--              event.preventDefault();--%>
+<%--              let contenutoP = document.getElementById("risultati").textContent;--%>
+<%--              window.location.href = "Prodotto?id=" + encodeURIComponent(contenutoP.trim());--%>
+<%--          }--%>
+<%--      </script>--%>
 
       <c:choose>
       <c:when test="${prodotti.size() > 0}">
@@ -107,6 +113,8 @@
 
           <!-- PAGINAZIONE -->
           <div class="paginazione">
+
+
               <c:if test="${npag > 1}"> <!-- controlla se funziona -->
                   <c:if test="${pag > 1}">
                       <a href="?categoria=${categoriaId}&ord=${ord}&pag=${pag - 1}&perpag=${perpag}">&larr;
@@ -129,6 +137,7 @@
                           &rarr;</a>
                   </c:if>
             </c:if>  <!-- controlla se funziona -->
+
           </div>
 
       </c:when>

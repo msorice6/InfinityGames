@@ -1,5 +1,6 @@
 function ricerca(str) {
     var dataList = document.getElementById("ricerca-datalist");
+    var val = document.getElementById("inputText").value;
 
     if (str.length === 0) {
         dataList.innerHTML = "";
@@ -24,7 +25,15 @@ function ricerca(str) {
 
                 dataList.appendChild(option);
                 document.getElementById("risultati").textContent = prodotto.id;
-
+//                alert("responso" + this.response);
+                alert("nodotto: " + prodotto.nome);
+                alert("str: " + str);
+                if (str === prodotto.nome) {
+                    // An item was selected from the list!
+                    // yourCallbackHere()
+//                    alert("dataDiLista"+dataList[i].value);
+                    forzaReindirizzamento(event);
+                }
             }
         }
     }
@@ -37,8 +46,4 @@ function forzaReindirizzamento(event) {
     event.preventDefault();
     let contenutoP = document.getElementById("risultati").textContent;
     window.location.href = "Prodotto?id=" + encodeURIComponent(contenutoP.trim());
-}
-
-function dropClick(){
-    alert("ID TROVATO");
 }
