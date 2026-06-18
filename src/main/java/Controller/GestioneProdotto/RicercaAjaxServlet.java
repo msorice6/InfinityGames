@@ -32,6 +32,8 @@ public class RicercaAjaxServlet extends HttpServlet {
                 org.json.JSONObject obj = new org.json.JSONObject();
                 obj.put("id", p.getId());
                 obj.put("nome", p.getNome());
+
+                System.out.println(p.getNome());
                 prodJson.put(obj);
             }
 
