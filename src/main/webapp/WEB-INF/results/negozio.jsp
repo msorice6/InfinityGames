@@ -42,12 +42,24 @@
       </form>
 
       <form method="get" action="Prodotto" id="filtroForm">
-      <div class="ordine-group" bis_skin_checked="1">
+          <div class="ordine-group" bis_skin_checked="1">
               <label> ricerca </label>
-              <input type="text" name="id" list="ricerca-datalist" placeholder="Ricerca" onkeyup="ricerca(this.value)" value="<c:out value="${param.q}" />">
-              <button type="submit"><img src="./images/search.png" width="15px" height="15px"></button>
+              <input type="text" name="id" list="ricerca-datalist" placeholder="Ricerca" onkeyup="ricerca(this.value)"
+                     value="<c:out value="${param.q}" />">
+              <button type="submit" onclick="forzaReindirizzamento(event)">
+                  <img src="./images/search.png" width="15px" height="15px">
+              </button>
               <datalist id="ricerca-datalist"></datalist>
-      </div>
+          </div>
+      </form>
+
+      <script>
+          function forzaReindirizzamento(event) {
+              event.preventDefault();
+              alert("hai cliccato");
+              window.location.href = "Prodotto?id="+  prodottoId;
+          }
+      </script>
 
       <c:choose>
       <c:when test="${prodotti.size() > 0}">

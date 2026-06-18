@@ -21,7 +21,7 @@ public class RicercaAjaxServlet extends HttpServlet {
     }
 
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-        System.out.println("ciao");
+//        System.out.println("ciao");
 
         JSONArray prodJson = new JSONArray();
         String query = request.getParameter("q");
@@ -29,16 +29,10 @@ public class RicercaAjaxServlet extends HttpServlet {
             List<Prodotto> prodotti = prodottoDAO.doRetrieveByNomeRicerca(query + "*", null,0, 10);
 
             for (Prodotto p : prodotti) {
-                System.out.println(p.getNome());
-
-                prodJson.put(p.getNome());
-
-//                JSONObject obj = new JSONObject();
-//                obj.put("id", p.getId());
-//                obj.put("nome", p.getNome());
-//                prodJson.put(obj);
-
-
+                org.json.JSONObject obj = new org.json.JSONObject();
+                obj.put("id", p.getId());
+                obj.put("nome", p.getNome());
+                prodJson.put(obj);
             }
 
             response.setContentType("application/json");
