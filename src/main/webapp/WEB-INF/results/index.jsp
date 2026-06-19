@@ -61,10 +61,11 @@
                             </div>
                         </li>
 
-                        <form class="form-inline" action="Ricerca">
-                            <input type="text" name="q" list="ricerca-datalist" placeholder="Ricerca" onkeyup="ricerca(this.value)" value="<c:out value="${param.q}" />">
+                        <form class="form-inline" method = "get" action="Prodotto" id = "filtroForm">
+                            <input type="text" id = "inputText" name="id" list="ricerca-datalist" placeholder="Ricerca" onkeyup="ricerca(this.value)" value="<c:out value="${param.q}" />">
                             <button type="submit"><img src="./images/search.png" width="15px" height="15px"></button>
                             <datalist id="ricerca-datalist"></datalist>
+                            <p id="risultati"style="display: none;" > risultati in p </p>
                         </form>
                     </ul>
                 </nav>

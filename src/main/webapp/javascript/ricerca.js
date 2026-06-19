@@ -26,8 +26,8 @@ function ricerca(str) {
                 dataList.appendChild(option);
                 document.getElementById("risultati").textContent = prodotto.id;
 //                alert("responso" + this.response);
-                alert("nodotto: " + prodotto.nome);
-                alert("str: " + str);
+//                alert("nodotto: " + prodotto.nome);
+//                alert("str: " + str);
                 if (str === prodotto.nome) {
                     // An item was selected from the list!
                     // yourCallbackHere()
