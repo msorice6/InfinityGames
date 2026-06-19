@@ -61,11 +61,16 @@
                             </div>
                         </li>
 
-                        <form class="form-inline" method = "get" action="Prodotto" id = "filtroForm">
-                            <input type="text" id = "inputText" name="id" list="ricerca-datalist" placeholder="Ricerca" onkeyup="ricerca(this.value)" value="<c:out value="${param.q}" />">
-                            <button type="submit"><img src="./images/search.png" width="15px" height="15px"></button>
+                        <!-- FORM DI RICERCA MODIFICATO: punta a Negozio, parametro q -->
+                        <form class="form-inline" method="get" action="Negozio">
+                            <input type="text" id="inputText" name="q" list="ricerca-datalist"
+                                   placeholder="Ricerca" onkeyup="ricerca(this.value)"
+                                   value="<c:out value="${param.q}" />" autocomplete="off">
+                            <button type="submit">
+                                <img src="./images/search.png" width="15px" height="15px" alt="Cerca">
+                            </button>
                             <datalist id="ricerca-datalist"></datalist>
-                            <p id="risultati"style="display: none;" > risultati in p </p>
+                            <!-- RIMOSSO il paragrafo #risultati perché non serve più -->
                         </form>
                     </ul>
                 </nav>
@@ -106,5 +111,33 @@
         </div>
     </div>
 </div>
+
+<!-- JavaScript: solo autocompletamento, SENZA reindirizzamento automatico -->
+<script>
+    function ricerca(str) {
+        var dataList = document.getElementById("ricerca-datalist");
+        if (str.length === 0) {
+            dataList.innerHTML = "";
+            return;
+        }
+
+        var xmlHttpReq = new XMLHttpRequest();
+        xmlHttpReq.responseType = 'json';
+        xmlHttpReq.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                dataList.innerHTML = "";
+                var responseArray = this.response;
+                for (var i = 0; i < responseArray.length; i++) {
+                    var prodotto = responseArray[i];
+                    var option = document.createElement('option');
+                    option.value = prodotto.nome;
+                    dataList.appendChild(option);
+                }
+            }
+        };
+        xmlHttpReq.open("GET", "RicercaAjax?q=" + encodeURIComponent(str), true);
+        xmlHttpReq.send();
+    }
+</script>
 
 <jsp:include page="footer.jsp"/>
