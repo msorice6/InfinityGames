@@ -1,6 +1,7 @@
+
+var globalVar;
 function ricerca(str) {
     var dataList = document.getElementById("ricerca-datalist");
-    var val = document.getElementById("inputText").value;
 
     if (str.length === 0) {
         dataList.innerHTML = "";
@@ -15,25 +16,19 @@ function ricerca(str) {
             dataList.innerHTML = "";
             var responseArray = this.response;
 
-            for (var i = 0; i < responseArray.length; i++) {
+            for (var i in this.response) {
                 var prodotto = responseArray[i];
 
                 var option = document.createElement('option');
 
-                option.value = prodotto.nome;
+                option.value = this.response[i];
 
+                globalVar = option.value;
 
                 dataList.appendChild(option);
                 document.getElementById("risultati").textContent = prodotto.id;
-//                alert("responso" + this.response);
-//                alert("nodotto: " + prodotto.nome);
-//                alert("str: " + str);
-                if (str === prodotto.nome) {
-                    // An item was selected from the list!
-                    // yourCallbackHere()
-//                    alert("dataDiLista"+dataList[i].value);
-                    forzaReindirizzamento(event);
-                }
+
+
             }
         }
     }
@@ -42,8 +37,29 @@ function ricerca(str) {
     xmlHttpReq.send();
 }
 
-function forzaReindirizzamento(event) {
-    event.preventDefault();
-    let contenutoP = document.getElementById("risultati").textContent;
-    window.location.href = "Prodotto?id=" + encodeURIComponent(contenutoP.trim());
+// 5. Update the function to accept the ID directly
+function forzaReindirizzamento(idToRedirect) {
+    alert("idToredirect"+idToRedirect);
+    // We do not need event.preventDefault() here because we are doing a manual JS redirect
+    window.location.href = "Prodotto?id=" + encodeURIComponent(idToRedirect);
+}
+
+
+const inputField = document.getElementById('inputText');
+
+inputField.addEventListener('input', function(event) {
+    // Check if the input was caused by selecting a datalist option
+    if (event.inputType === 'insertReplacementText') {
+
+        // Call your function and pass the selected value
+        myCustomFunction(this.value);
+
+    } else if (event.inputType === undefined) {
+        // Fallback for older browsers: check if the typed value exactly matches an option
+            myCustomFunction(this.value);
+    }
+});
+
+function myCustomFunction(selectedValue) {
+    forzaReindirizzamento(globalVar);
 }
