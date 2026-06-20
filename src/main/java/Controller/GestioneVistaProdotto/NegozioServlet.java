@@ -68,23 +68,28 @@ public class NegozioServlet extends HttpServlet {
         request.setAttribute("ord", ord);
 
         // 4. Recupera i prodotti
-        // 4. Recupera i prodotti
-        List<Prodotto> prodotti;
-
         String q = request.getParameter("q");
         int totalProdotti;
+        List<Prodotto> prodotti;
+
         if (q != null && !q.trim().isEmpty()) {
-            // Ricerca FULLTEXT
-            String search = q.trim();
-            // Aggiungo wildcard per la ricerca booleana (come fanno gli altri metodi)
-            String against = search + "*";
-            totalProdotti = service.countByNomeFullText(against);
-            prodotti = service.doRetrieveByNomeFullText(against, ord, (pag - 1) * perpag, perpag);
+            String against = q.trim() + "*"; // come già facevi
+            if (categoriaId > 0) {
+                // Ricerca + categoria
+                totalProdotti = service.countByNomeAndCategoria(against, categoriaId);
+                prodotti = service.doRetrieveByNomeAndCategoria(against, categoriaId, ord, (pag - 1) * perpag, perpag);
+            } else {
+                // Solo ricerca
+                totalProdotti = service.countByNomeFullText(against);
+                prodotti = service.doRetrieveByNomeFullText(against, ord, (pag - 1) * perpag, perpag);
+            }
             request.setAttribute("q", q);
         } else if (categoriaId > 0) {
+            // Solo categoria
             totalProdotti = service.countByCategoria(categoriaId);
             prodotti = service.doRetrieveByCategoriaLimit(categoriaId, ord, (pag - 1) * perpag, perpag);
         } else {
+            // Nessun filtro
             totalProdotti = service.countAllProdotti();
             prodotti = service.doRetrieveByNegozioLimit(ord, (pag - 1) * perpag, perpag);
         }

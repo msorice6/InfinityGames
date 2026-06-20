@@ -1031,6 +1031,57 @@ public class ProdottoDAO {
         }
         return list;
     }
+    // Conteggio prodotti che corrispondono alla ricerca E appartengono a una categoria
+    public int countByNomeAndCategoria(String against, int categoriaId) {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT COUNT(*) FROM Prodotto p " +
+                            "JOIN Prodottocategoria pc ON p.id = pc.idProdotto " +
+                            "WHERE pc.idCategoria = ? AND MATCH(p.nome) AGAINST(? IN BOOLEAN MODE)"
+            );
+            ps.setInt(1, categoriaId);
+            ps.setString(2, against);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return rs.getInt(1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    // Recupero prodotti con ricerca + categoria + ordinamento + paginazione
+    public List<Prodotto> doRetrieveByNomeAndCategoria(String against, int categoriaId, OrderByNegozio ord, int offset, int limit) {
+        List<Prodotto> list = new ArrayList<>();
+        try (Connection con = ConPool.getConnection()) {
+            String sql = "SELECT p.id, p.nome, p.descrizione, p.prezzo, p.quant_vend, p.sconto, p.images, p.video " +
+                    "FROM Prodotto p " +
+                    "JOIN Prodottocategoria pc ON p.id = pc.idProdotto " +
+                    "WHERE pc.idCategoria = ? AND MATCH(p.nome) AGAINST(? IN BOOLEAN MODE) " +
+                    ord.getSql() + " LIMIT ?, ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setInt(1, categoriaId);
+            ps.setString(2, against);
+            ps.setInt(3, offset);
+            ps.setInt(4, limit);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Prodotto p = new Prodotto();
+                p.setId(rs.getInt(1));
+                p.setNome(rs.getString(2));
+                p.setDescrizione(rs.getString(3));
+                p.setPrezzo(rs.getDouble(4));
+                p.setQuant_vend(rs.getInt(5));
+                p.setSconto(rs.getInt(6));
+                p.setImages(rs.getString(7));
+                p.setVideo(rs.getString(8));
+                p.setCategorie(getCategorie(con, p.getId()));
+                list.add(p);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 
 
 }
