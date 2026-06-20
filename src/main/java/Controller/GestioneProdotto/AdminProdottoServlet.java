@@ -46,8 +46,8 @@ public class AdminProdottoServlet extends HttpServlet {
                 String descrizione = request.getParameter("descrizione");
                 String prezzoCent = request.getParameter("prezzoCent");
                 String sconto = request.getParameter("sconto");
-                Part filePart = request.getPart("file"); // Retrieves <input type="file" name="file">
-                Part fileVideo = request.getPart("video");
+                Part filePart = request.getPart("file");
+                String videoLink = request.getParameter("video");
 
                 if (nome != null  && descrizione != null && prezzoCent != null && sconto != null ) {
                     // modifica/aggiunta prodotto
@@ -93,21 +93,16 @@ public class AdminProdottoServlet extends HttpServlet {
                     throw new MyServletException("Nessuna immagine selezionata");
                 }*/
 
-                    if (fileVideo != null /*&& !fileVideo.equals("")*/) {
-                        String fileName = Paths.get(fileVideo.getSubmittedFileName()).getFileName().toString();
-                        if (fileName != null && !fileName.equals("")) {
-                            System.out.println("Nome file:" + fileName); //quando carichi una foto controlla che questo ti stampa il nome del
-                            //file che hai caricato
-                            fileVideo.write(getServletContext().getRealPath("") + File.separator + "videos" + File.separator + fileName);
-                            prodotto.setVideo(fileName);
+
+                    if (videoLink != null && !videoLink.trim().isEmpty()) {
+                        String videoId = extractYouTubeId(videoLink);
+                        if (videoId != null) {
+                            prodotto.setVideo(videoId);
+                            System.out.println("ID YouTube estratto: " + videoId);
                         } else {
-                            throw new MyServletException("Nessun video selezionato");
+                            throw new MyServletException("Link YouTube non valido. Inserisci un URL del tipo https://www.youtube.com/watch?v=...");
                         }
                     }
-                /* else{
-                    throw new MyServletException("Nessun video selezionato");
-                } */
-
                     try {
                         String[] categorie = request.getParameterValues("categorie");
                         if (categorie != null && !categorie.equals("")) {
@@ -174,10 +169,22 @@ public class AdminProdottoServlet extends HttpServlet {
 
                 request.setAttribute("prodotto", prodotto);
             }
+
         }
 
         RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/results/adminprodotto.jsp");
         requestDispatcher.forward(request, response);
 
+    }
+    private String extractYouTubeId(String url) {
+        if (url == null) return null;
+        // Pattern per estrarre l'ID da vari formati di URL YouTube
+        String pattern = "(?<=v=|youtu.be/|/embed/|/v/|\\?v=|&v=)([a-zA-Z0-9_-]{11})";
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile(pattern);
+        java.util.regex.Matcher m = p.matcher(url);
+        if (m.find()) {
+            return m.group();
+        }
+        return null;
     }
 }

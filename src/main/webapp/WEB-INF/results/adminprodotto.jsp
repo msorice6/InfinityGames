@@ -42,8 +42,12 @@
             <input type="file" name="file" id = "file" <c:if test="${operazione != 'Modifica'}">oninput="validaImg()" </c:if>><br>
             </div>
             <div class="add">
-            <label>Carica video: </label>
-            <input type="file" name="video" id = "video" <c:if test="${operazione != 'Modifica'}">oninput="validaVideo()" </c:if>>
+                <label>Link YouTube del trailer: </label>
+                <input type="text" name="video" id="video"
+                       placeholder="https://www.youtube.com/watch?v=XXXXX"
+                       value="${prodotto.video != null ? 'https://www.youtube.com/watch?v='.concat(prodotto.video) : ''}"
+                       oninput="validaVideo()">
+                <small style="color: #0d9a0d; display: block;">Inserisci l'URL completo del video YouTube. Verrà salvato solo l'ID.</small>
             </div>
             <input id="modifica" type="submit"  name="operazioneProdotto"  value="${operazione}" <c:if test="${operazione != 'Modifica'}">disabled</c:if>>
             <c:if test="${prodotto != null}">
