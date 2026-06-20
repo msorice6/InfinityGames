@@ -70,18 +70,27 @@ public class NegozioServlet extends HttpServlet {
         // 4. Recupera i prodotti
         // 4. Recupera i prodotti
         List<Prodotto> prodotti;
-        int totaleProdotti;
 
-        if (categoriaId > 0) {
+        String q = request.getParameter("q");
+        int totalProdotti;
+        if (q != null && !q.trim().isEmpty()) {
+            // Ricerca FULLTEXT
+            String search = q.trim();
+            // Aggiungo wildcard per la ricerca booleana (come fanno gli altri metodi)
+            String against = search + "*";
+            totalProdotti = service.countByNomeFullText(against);
+            prodotti = service.doRetrieveByNomeFullText(against, ord, (pag - 1) * perpag, perpag);
+            request.setAttribute("q", q);
+        } else if (categoriaId > 0) {
+            totalProdotti = service.countByCategoria(categoriaId);
             prodotti = service.doRetrieveByCategoriaLimit(categoriaId, ord, (pag - 1) * perpag, perpag);
-            totaleProdotti = service.countByCategoria(categoriaId);
         } else {
+            totalProdotti = service.countAllProdotti();
             prodotti = service.doRetrieveByNegozioLimit(ord, (pag - 1) * perpag, perpag);
-            totaleProdotti = service.countAllProdotti();
         }
 
         // 5. Calcolo pagine
-        int npag = (totaleProdotti + perpag - 1) / perpag;
+        int npag = (totalProdotti + perpag - 1) / perpag;
         request.setAttribute("npag", npag);
         request.setAttribute("categoriaId", categoriaId);
 

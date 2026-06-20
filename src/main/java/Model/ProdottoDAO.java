@@ -986,4 +986,51 @@ public class ProdottoDAO {
             throw new RuntimeException(e);
         }
     }
+
+
+    public int countByNomeFullText(String against) {
+        try (Connection con = ConPool.getConnection()) {
+            PreparedStatement ps = con.prepareStatement(
+                    "SELECT COUNT(*) FROM Prodotto WHERE MATCH(nome) AGAINST(? IN BOOLEAN MODE)"
+            );
+            ps.setString(1, against);
+            ResultSet rs = ps.executeQuery();
+            rs.next();
+            return rs.getInt(1);
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public List<Prodotto> doRetrieveByNomeFullText(String against, OrderByNegozio ord, int offset, int limit) {
+        ArrayList<Prodotto> list = new ArrayList<>();
+        try (Connection con = ConPool.getConnection()) {
+            String sql = "SELECT p.id, p.nome, p.descrizione, p.prezzo, p.quant_vend, p.sconto, p.images, p.video " +
+                    "FROM Prodotto p WHERE MATCH(nome) AGAINST(? IN BOOLEAN MODE) " +
+                    ord.getSql() + " LIMIT ?, ?";
+            PreparedStatement ps = con.prepareStatement(sql);
+            ps.setString(1, against);
+            ps.setInt(2, offset);
+            ps.setInt(3, limit);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                Prodotto p = new Prodotto();
+                p.setId(rs.getInt(1));
+                p.setNome(rs.getString(2));
+                p.setDescrizione(rs.getString(3));
+                p.setPrezzo(rs.getDouble(4));
+                p.setQuant_vend(rs.getInt(5));
+                p.setSconto(rs.getInt(6));
+                p.setImages(rs.getString(7));
+                p.setVideo(rs.getString(8));
+                p.setCategorie(getCategorie(con, p.getId()));
+                list.add(p);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+
 }
