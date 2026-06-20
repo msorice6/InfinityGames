@@ -1,6 +1,7 @@
 
-var globalVar;
+var globalVar = [];
 function ricerca(str) {
+
     var dataList = document.getElementById("ricerca-datalist");
 
     if (str.length === 0) {
@@ -14,21 +15,18 @@ function ricerca(str) {
 
         if (this.readyState == 4 && this.status == 200) {
             dataList.innerHTML = "";
-            var responseArray = this.response;
 
             for (var i in this.response) {
-                var prodotto = responseArray[i];
-
                 var option = document.createElement('option');
 
-                option.value = this.response[i];
+                option.value = this.response[i].nome;
 
-                globalVar = option.value;
+                globalVar.push({
+                    nome: this.response[i].nome,
+                    id: this.response[i].id
+                });
 
                 dataList.appendChild(option);
-                document.getElementById("risultati").textContent = prodotto.id;
-
-
             }
         }
     }
@@ -37,29 +35,37 @@ function ricerca(str) {
     xmlHttpReq.send();
 }
 
-// 5. Update the function to accept the ID directly
 function forzaReindirizzamento(idToRedirect) {
-    alert("idToredirect"+idToRedirect);
-    // We do not need event.preventDefault() here because we are doing a manual JS redirect
+
     window.location.href = "Prodotto?id=" + encodeURIComponent(idToRedirect);
 }
-
 
 const inputField = document.getElementById('inputText');
 
 inputField.addEventListener('input', function(event) {
-    // Check if the input was caused by selecting a datalist option
     if (event.inputType === 'insertReplacementText') {
 
-        // Call your function and pass the selected value
         myCustomFunction(this.value);
 
     } else if (event.inputType === undefined) {
-        // Fallback for older browsers: check if the typed value exactly matches an option
             myCustomFunction(this.value);
     }
 });
 
 function myCustomFunction(selectedValue) {
-    forzaReindirizzamento(globalVar);
+
+    if (!globalVar || globalVar.length === 0) {
+        console.log("Nessun dato memorizzato in globalVar.");
+        return;
+    }
+
+    for (var i = 0; i < globalVar.length; i++) {
+        if(globalVar[i].nome === selectedValue) {
+            selectedValue = globalVar[i].id;
+            break;
+        }
+    }
+
+    forzaReindirizzamento(selectedValue);
 }
+
