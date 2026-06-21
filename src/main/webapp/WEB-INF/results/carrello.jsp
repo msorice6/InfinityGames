@@ -8,11 +8,7 @@
 </jsp:include>
 
 <div class="contain-all" ondblclick="chiudi(this)">
-    <div>
-        <a href="Sconto">
-            <img src="./images/sconti.jpg" width="100%" height="200px">
-        </a>
-    </div>
+
     <div class="centrale">
         <c:if test="${carrello.prodotti.size() >0}">
         <h1 style="text-align: center">Il tuo carrello: ${carrello.prodotti.size()}</h1>
@@ -92,6 +88,7 @@
 
 
 <jsp:include page="footer.jsp"/>
+
 <!--
 <script>
     function acquisto() {
