@@ -28,7 +28,13 @@ public class NegozioServlet extends HttpServlet {
         // 1. Parametri filtro categoria
         String categoriaIdStr = request.getParameter("categoria");
         int categoriaId = 0;
-
+        if (categoriaIdStr != null && !categoriaIdStr.equals("")) {
+            try {
+                categoriaId = Integer.parseInt(categoriaIdStr);
+            } catch (NumberFormatException e) {
+                throw new MyServletException("ID categoria non valido");
+            }
+        }
 
         // 2. Parametri paginazione
         String pagStr = request.getParameter("pag");
@@ -46,6 +52,7 @@ public class NegozioServlet extends HttpServlet {
 
         int perpag = 12;
         request.setAttribute("perpag", perpag);
+
 
         // 3. Parametro ordinamento
         String ordStr = request.getParameter("ord");

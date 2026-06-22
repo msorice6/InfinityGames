@@ -38,20 +38,28 @@ public class NegozioAJAXServlet extends HttpServlet {
             }
         }
 
-        // 2. Parametri paginazione
+//        // 2. Parametri paginazione
+//        String pagStr = request.getParameter("pag");
+//        int pag;
+//        if (pagStr == null || pagStr.equals("")) {
+//            pag = 1;
+//        } else {
+//            try {
+//                pag = Integer.parseInt(pagStr);
+//            } catch (NumberFormatException e) {
+//                throw new MyServletException("Parametro pagina non valido");
+//            }
+//        }
+        int pag = 1;
         String pagStr = request.getParameter("pag");
-        int pag;
-        if (pagStr == null || pagStr.equals("")) {
-            pag = 1;
-        } else {
+        if (pagStr != null && !pagStr.trim().isEmpty()) {
             try {
                 pag = Integer.parseInt(pagStr);
             } catch (NumberFormatException e) {
-                throw new MyServletException("Parametro pagina non valido");
+                pag = 1; // Default to page 1 if invalid
             }
         }
         request.setAttribute("pag", pag);
-
         int perpag = 12;
         request.setAttribute("perpag", perpag);
 
@@ -107,8 +115,26 @@ public class NegozioAJAXServlet extends HttpServlet {
             obj.put("id", p.getId());
             obj.put("nome", p.getNome());
             obj.put("prezzo", p.getPrezzo());
+            obj.put("prezzoScontato", p.getPrezzoScontato());
+            obj.put("sconto", p.getSconto());
+            obj.put("quant_vend", p.getQuant_vend());
+            obj.put("images", p.getImages() != null ? p.getImages() : "");
+
+            // Populate nested categories
+            JSONArray catArray = new JSONArray();
+            if (p.getCategorie() != null) {
+                for (Categoria c : p.getCategorie()) {
+                    org.json.JSONObject catObj = new org.json.JSONObject();
+                    catObj.put("id", c.getId());
+                    catObj.put("nome", c.getNome());
+                    catArray.put(catObj);
+                }
+            }
+            obj.put("categorie", catArray);
+
             prodJson.put(obj);
         }
+
         response.setContentType("application/json");
         response.getWriter().append(prodJson.toString());
     }

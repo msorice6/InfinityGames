@@ -33,7 +33,7 @@ public class RicercaAjaxServlet extends HttpServlet {
                 obj.put("id", p.getId());
                 obj.put("nome", p.getNome());
 
-                System.out.println(p.getNome());
+//                System.out.println(p.getNome());
                 prodJson.put(obj);
             }
 
