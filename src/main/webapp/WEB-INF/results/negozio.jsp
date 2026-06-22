@@ -46,7 +46,7 @@
                 <input type="text" id="inputText" name="q" list="ricerca-datalist"
                        placeholder="Ricerca..." value="<c:out value="${param.q}" />"
                        onkeyup="ricerca(this.value)" autocomplete="off">
-                <button type="submit" onclick="negozio()">
+                <button type="submit" onclick="event.preventDefault(); negozio()">
                     <img src="./images/search.png" width="15px" height="15px" alt="Cerca">
                 </button>
                 <datalist id="ricerca-datalist"></datalist>
@@ -143,6 +143,7 @@
 
   </div>
 </div>
+
 
 <script>
     // 1. We must define the function that builds the HTML here so the script knows what to do
@@ -249,7 +250,13 @@
 
         xmlHttpReq.open("GET", requestUrl, true);
         xmlHttpReq.send();
-    }
+    }// AVVIO AUTOMATICO DELLA RICERCA SE C'È UN PARAMETRO q NELL'URL
+    document.addEventListener("DOMContentLoaded", function() {
+        var inputElement = document.getElementById("inputText");
+        if (inputElement && inputElement.value.trim() !== "") {
+            negozio();
+        }
+    });
 </script>
 
 <jsp:include page="footer.jsp"/>

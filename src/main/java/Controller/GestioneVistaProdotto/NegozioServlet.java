@@ -53,22 +53,40 @@ public class NegozioServlet extends HttpServlet {
         int perpag = 12;
         request.setAttribute("perpag", perpag);
 
-
         // 3. Parametro ordinamento
         String ordStr = request.getParameter("ord");
         ProdottoDAO.OrderByNegozio ord;
-        ord = ProdottoDAO.OrderByNegozio.ALFABETICO_ASC;
+        if (ordStr == null || ordStr.equals("")) {
+            ord = ProdottoDAO.OrderByNegozio.ALFABETICO_ASC;
+        } else {
+            try {
+                ord = ProdottoDAO.OrderByNegozio.valueOf(ordStr);
+            } catch (IllegalArgumentException e) {
+                ord = ProdottoDAO.OrderByNegozio.ALFABETICO_ASC;
+            }
+        }
+        request.setAttribute("ord", ord);
 
-
-        // 4. Recupera i prodotti
         // 4. Recupera i prodotti
         List<Prodotto> prodotti;
 
         String q = request.getParameter("q");
         int totalProdotti;
-        totalProdotti = service.countAllProdotti();
-        prodotti = service.doRetrieveByNegozioLimit(ord, (pag - 1) * perpag, perpag);
 
+        if (q != null && !q.trim().isEmpty()) {
+            // Ricerca FULLTEXT
+            String search = q.trim();
+            String against = search + "*";
+            totalProdotti = service.countByNomeFullText(against);
+            prodotti = service.doRetrieveByNomeFullText(against, ord, (pag - 1) * perpag, perpag);
+            request.setAttribute("q", q);
+        } else if (categoriaId > 0) {
+            totalProdotti = service.countByCategoria(categoriaId);
+            prodotti = service.doRetrieveByCategoriaLimit(categoriaId, ord, (pag - 1) * perpag, perpag);
+        } else {
+            totalProdotti = service.countAllProdotti();
+            prodotti = service.doRetrieveByNegozioLimit(ord, (pag - 1) * perpag, perpag);
+        }
 
         // 5. Calcolo pagine
         int npag = (totalProdotti + perpag - 1) / perpag;
