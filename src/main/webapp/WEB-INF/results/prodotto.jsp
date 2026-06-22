@@ -27,9 +27,29 @@
 </div>
 <div class="contain-prod">
     <div class="video">
-        <video id="video" controls autoplay width="600" height="350">
-            <source type="video/mp4" src="./videos/${prodotto.video}" >
-        </video>
+        <c:choose>
+            <c:when test="${not empty prodotto.video}">
+                <video id="video-${prodotto.id}"
+                       controls
+                       width="600"
+                       height="350"
+                       poster="./images/prodotti/${prodotto.images}">
+                    <source type="video/mp4" src="./videos/${prodotto.video}">
+                    <!-- Aggiungi più formati per compatibilità -->
+                    <source type="video/webm" src="./videos/${prodotto.video.replace('.mp4', '.webm')}">
+                    <source type="video/ogg" src="./videos/${prodotto.video.replace('.mp4', '.ogv')}">
+                    <p>Il tuo browser non supporta il tag video.
+                        <a href="./videos/${prodotto.video}">Scarica il trailer</a>
+                    </p>
+                </video>
+            </c:when>
+            <c:otherwise>
+                <div class="no-video">
+                    <p>Trailer non disponibile per questo prodotto</p>
+                    <img src="./images/prodotti/${prodotto.images}" alt="${prodotto.nome}" width="600" height="350">
+                </div>
+            </c:otherwise>
+        </c:choose>
     </div>
    <div class="img-nom-desc" >
        <div class="imagine">
