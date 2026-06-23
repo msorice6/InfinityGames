@@ -38,6 +38,7 @@ public class NegozioAJAXServlet extends HttpServlet {
             }
         }
 
+
 //        // 2. Parametri paginazione
 //        String pagStr = request.getParameter("pag");
 //        int pag;
@@ -50,6 +51,8 @@ public class NegozioAJAXServlet extends HttpServlet {
 //                throw new MyServletException("Parametro pagina non valido");
 //            }
 //        }
+
+
         int pag = 1;
         String pagStr = request.getParameter("pag");
         if (pagStr != null && !pagStr.trim().isEmpty()) {
@@ -118,6 +121,8 @@ public class NegozioAJAXServlet extends HttpServlet {
             obj.put("prezzoScontato", p.getPrezzoScontato());
             obj.put("sconto", p.getSconto());
             obj.put("quant_vend", p.getQuant_vend());
+            obj.put("npag", npag);
+            obj.put("pag", pag);
             obj.put("images", p.getImages() != null ? p.getImages() : "");
 
             // Populate nested categories

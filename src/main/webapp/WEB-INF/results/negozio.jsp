@@ -17,8 +17,7 @@
             <div class="filtri-ordine">
                 <div class="ordine-group">
                     <label for="ordineSelect">Ordina per:</label>
-                    <select name="ord" id="ordineSelect" onchange="negozio()">
-                        <option value="ALFABETICO_ASC" ${ord == 'ALFABETICO_ASC' ? 'selected' : ''}>A-Z</option>
+                    <select name="ord" id="ordineSelect" onchange="negozio(${pag})">                        <option value="ALFABETICO_ASC" ${ord == 'ALFABETICO_ASC' ? 'selected' : ''}>A-Z</option>
                         <option value="ALFABETICO_DESC" ${ord == 'ALFABETICO_DESC' ? 'selected' : ''}>Z-A</option>
                         <option value="PREZZO_ASC" ${ord == 'PREZZO_ASC' ? 'selected' : ''}>Prezzo: dal più basso
                         </option>
@@ -107,31 +106,32 @@
 
           <!-- PAGINAZIONE -->
           <div class="paginazione">
+              <c:if test="${npag > 1}">
 
-
-              <c:if test="${npag > 1}"> <!-- controlla se funziona -->
                   <c:if test="${pag > 1}">
-                      <a href="?categoria=${categoriaId}&ord=${ord}&pag=${pag - 1}&perpag=${perpag}">&larr;
-                          precedente</a>
+                      <a href="#" onclick="cambiaPagina(${pag - 1}); return false;">&larr; precedente</a>
                   </c:if>
+
                   &emsp;
+
                   <c:forEach begin="1" end="${npag}" var="i">
                       <c:choose>
                           <c:when test="${i == pag}">
                               <b>${i}</b>
                           </c:when>
                           <c:otherwise>
-                              <a href="?categoria=${categoriaId}&ord=${ord}&pag=${i}&perpag=${perpag}">${i}</a>
+                              <a href="#" onclick="cambiaPagina(${i}); return false;">${i}</a>
                           </c:otherwise>
                       </c:choose>
                   </c:forEach>
-                  &emsp;
-                  <c:if test="${pag < npag}">
-                      <a href="?categoria=${categoriaId}&ord=${ord}&pag=${pag + 1}&perpag=${perpag}">successiva
-                          &rarr;</a>
-                  </c:if>
-            </c:if>  <!-- controlla se funziona -->
 
+                  &emsp;
+
+                  <c:if test="${pag < npag}">
+                      <a href="#" onclick="cambiaPagina(${pag + 1}); return false;">successiva &rarr;</a>
+                  </c:if>
+
+              </c:if>
           </div>
 
       </c:when>
@@ -173,7 +173,6 @@
             }
             categorieHtml = catLinks.join(', ');
         }
-
         // Fallbacks just in case the JSON is missing data
         var images = prodotto.images ? prodotto.images : 'default.png';
         var quantVend = prodotto.quant_vend ? prodotto.quant_vend : 0;
@@ -209,7 +208,7 @@
     }
 
     // 2. Your main AJAX function
-    function negozio() {
+    function negozio(paginaRichiesta) {
         var inputElement = document.getElementById("inputText");
         var str = inputElement ? inputElement.value : "";
 
@@ -235,11 +234,17 @@
                     return;
                 }
 
+                var pagProdottoCategoria;
                 // 3. THIS MUST NOT BE COMMENTED OUT. Loop through the JSON and draw the elements.
                 prodotti.forEach(function(prodotto) {
                     var newCard = createProductCardWithTemplate(prodotto);
                     menuContainer.appendChild(newCard);
+                    pagProdottoCategoria = prodotto.npag;
                 });
+
+                if(currentCategoria > 0)
+                    alert("num Pagine del prodotto: "+ pagProdottoCategoria);
+                    aggiornaPaginazione(pagProdottoCategoria);
             }
         }
 
@@ -250,6 +255,67 @@
         xmlHttpReq.open("GET", requestUrl, true);
         xmlHttpReq.send();
     }
+
+    function cambiaPagina(pag) {
+        // 1. Leggi i valori attualmente selezionati
+        var currentOrd = document.getElementById("ordineSelect").value;
+        var currentCategoria = document.getElementById("categoriaSelect").value;
+
+        // Leggi anche la barra di ricerca, se esiste
+        var inputElement = document.getElementById("inputText");
+        var currentQ = inputElement ? inputElement.value : "";
+
+        // 2. Costruisci l'URL verso la Servlet classica (Negozio)
+        var url = "Negozio?categoria=" + encodeURIComponent(currentCategoria) +
+            "&ord=" + encodeURIComponent(currentOrd) +
+            "&q=" + encodeURIComponent(currentQ) +
+            "&pag=" + encodeURIComponent(pag) +
+            "&perpag=12";
+
+        // 3. Esegui il reindirizzamento
+        window.location.href = url;
+    }
+
+    function aggiornaPaginazione(npag, pagCorrente = 1) {
+        var container = document.querySelector('.paginazione');
+        if (!container) return;
+
+        // Svuota il contenitore prima di aggiornarlo
+        container.innerHTML = '';
+
+        // Assicurati che npag sia un intero
+        npag = parseInt(npag);
+
+        // Se c'è una sola pagina (o zero), non mostrare la barra di paginazione
+        if (isNaN(npag) || npag <= 1) {
+            return;
+        }
+
+        var html = '';
+
+        // Genera il link "precedente" se non siamo alla prima pagina
+        if (pagCorrente > 1) {
+            html += '<a href="#" onclick="cambiaPagina(' + (pagCorrente - 1) + '); return false;">&larr; precedente</a>&emsp;';
+        }
+
+        // Genera i numeri delle pagine
+        for (var i = 1; i <= npag; i++) {
+            if (i === pagCorrente) {
+                html += '<b>' + i + '</b>&emsp;'; // Pagina attiva non cliccabile
+            } else {
+                html += '<a href="#" onclick="cambiaPagina(' + i + '); return false;">' + i + '</a>&emsp;';
+            }
+        }
+
+        // Genera il link "successiva" se non siamo all'ultima pagina
+        if (pagCorrente < npag) {
+            html += '<a href="#" onclick="cambiaPagina(' + (pagCorrente + 1) + '); return false;">successiva &rarr;</a>';
+        }
+
+        // Inserisce il nuovo HTML nel contenitore
+        container.innerHTML = html;
+    }
+
 </script>
 
 <jsp:include page="footer.jsp"/>

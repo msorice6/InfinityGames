@@ -63,12 +63,15 @@ function createProductCardWithTemplate(prodotto) {
 }
 
 // 2. Your main AJAX function
-function negozio() {
+function negozio(paginaRichiesta) {
+    alert("sei a pagina: "+ paginaRichiesta);
     var inputElement = document.getElementById("inputText");
     var str = inputElement ? inputElement.value : "";
 
     var currentOrd = document.getElementById("ordineSelect").value;
     var currentCategoria = document.getElementById("categoriaSelect").value;
+
+    var currentPagina = paginaRichiesta;
 
     var xmlHttpReq = new XMLHttpRequest();
     xmlHttpReq.responseType = 'json';
@@ -99,7 +102,11 @@ function negozio() {
 
     var requestUrl = "NegozioAjax?ord=" + encodeURIComponent(currentOrd) +
         "&categoria=" + encodeURIComponent(currentCategoria) +
-        "&q=" + encodeURIComponent(str);
+        "&q=" + encodeURIComponent(str) +
+        "&pag=" + encodeURIComponent(paginaRichiesta)
+
+
+    ;
 
     xmlHttpReq.open("GET", requestUrl, true);
     xmlHttpReq.send();

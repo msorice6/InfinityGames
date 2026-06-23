@@ -36,39 +36,53 @@ public class NegozioServlet extends HttpServlet {
             }
         }
 
-        // 2. Parametri paginazione
+//        // 2. Parametri paginazione
+        int pag = 1;
         String pagStr = request.getParameter("pag");
-        int pag;
-        if (pagStr == null || pagStr.equals("")) {
-            pag = 1;
-        } else {
+        if (pagStr != null && !pagStr.trim().isEmpty()) {
             try {
                 pag = Integer.parseInt(pagStr);
             } catch (NumberFormatException e) {
-                throw new MyServletException("Parametro pagina non valido");
+                pag = 1; // Default to page 1 if invalid
             }
         }
         request.setAttribute("pag", pag);
-
         int perpag = 12;
         request.setAttribute("perpag", perpag);
-
 
         // 3. Parametro ordinamento
         String ordStr = request.getParameter("ord");
         ProdottoDAO.OrderByNegozio ord;
-        ord = ProdottoDAO.OrderByNegozio.ALFABETICO_ASC;
+        if (ordStr == null || ordStr.equals("")) {
+            ord = ProdottoDAO.OrderByNegozio.ALFABETICO_ASC;
+        } else {
+            try {
+                ord = ProdottoDAO.OrderByNegozio.valueOf(ordStr);
+            } catch (IllegalArgumentException e) {
+                ord = ProdottoDAO.OrderByNegozio.ALFABETICO_ASC;
+            }
+        }
+        request.setAttribute("ord", ord);
 
-
-        // 4. Recupera i prodotti
         // 4. Recupera i prodotti
         List<Prodotto> prodotti;
 
         String q = request.getParameter("q");
         int totalProdotti;
-        totalProdotti = service.countAllProdotti();
-        prodotti = service.doRetrieveByNegozioLimit(ord, (pag - 1) * perpag, perpag);
-
+        if (q != null && !q.trim().isEmpty()) {
+            // Ricerca FULLTEXT
+            String search = q.trim();
+            String against = search + "*";
+            totalProdotti = service.countByNomeFullText(against);
+            prodotti = service.doRetrieveByNomeFullText(against, ord, (pag - 1) * perpag, perpag);
+            request.setAttribute("q", q);
+        } else if (categoriaId > 0) {
+            totalProdotti = service.countByCategoria(categoriaId);
+            prodotti = service.doRetrieveByCategoriaLimit(categoriaId, ord, (pag - 1) * perpag, perpag);
+        } else {
+            totalProdotti = service.countAllProdotti();
+            prodotti = service.doRetrieveByNegozioLimit(ord, (pag - 1) * perpag, perpag);
+        }
 
         // 5. Calcolo pagine
         int npag = (totalProdotti + perpag - 1) / perpag;
@@ -78,7 +92,7 @@ public class NegozioServlet extends HttpServlet {
         // 6. Categorie per il menu a tendina
         ArrayList<Categoria> categorie = categoriaService.doRetrieveAll();
         request.setAttribute("categorie", categorie);
-
+        System.out.println("sono nell'ajax npag: "+npag+" categoria: "+ categoriaIdStr+ "ordinamento: "+ ordStr);
         // 7. Prodotti
         request.setAttribute("prodotti", prodotti);
 
