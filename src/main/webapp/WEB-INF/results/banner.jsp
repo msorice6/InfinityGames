@@ -5,7 +5,7 @@
 <head>
     <title>Infinity Games - ${param.pageTitle}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<%--    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">--%>
     <link rel="stylesheet" href="./css/style.css" type="text/css"/>
     <link rel="stylesheet" href="./css/footer.css" type="text/css"/>
     <link rel="stylesheet" href="./css/adminCategoria.css" type="text/css"/>
@@ -25,61 +25,63 @@
 <body>
 
 <div class="super_container">
-    <div class="contieni-icona">
-        <div id="resp" class="icon-resp">
-            <div>
-                <span>
-                    <a href="javascript:void(0)" style="text-decoration: none" onclick="openNav()">
-                        <i class="fa fa-align-justify" style="font-size: 45px"></i>
-                    </a>
-                </span>
-            </div>
-        </div>
-        <div id="myNav" class="overlay">
-            <a href="javascript:void(0)" style="text-decoration: none" onclick="closeNav()">&times;</a>
-            <div class="overlay-content">
-                <div class="menu-resp">
-                    <a class="responsive-menu" href="${pageContext.request.contextPath}/Negozio" style="text-decoration: none">Negozio</a>
-                </div>
-                <div class="menu-resp">
-                    <a class="responsive-menu" href="Libreria" style="text-decoration: none">La Tua Libreria</a>
-                </div>
-                <div class="menu-resp">
-                    <a class="responsive-menu" href="Assistenza" style="text-decoration: none">ASSISTENZA</a>
-                </div>
-                <div class="menu-resp">
-                    <a class="responsive-menu" href="Carrello" style="text-decoration: none">CARRELLO
-                        <c:if test="${carrello.prodotti.size() != null && carrello.prodotti.size() > 0}">
-                            (${carrello.prodotti.size()})
-                        </c:if>
-                    </a>
-                </div>
-                <div class="menu-resp">
-                    <c:if test="${utente == null}">
-                        <a class="responsive-menu" href="./login.jsp" style="text-decoration: none">LOGIN</a>
-                    </c:if>
-                </div>
-                <c:if test="${utente != null}">
-                    <div class="menu-resp">
-                        <a class="responsive-menu" href="#" style="text-decoration: none">${utente.username}</a>
-                        <div class="dropdown-content-ute" style="top:270px;">
-                            <c:if test="${utente.admin}">
-                                <a href="AdminCategoria">Aggiungi Categoria</a>
-                                <a href="AdminProdotto">Aggiungi Prodotto</a>
-                                <a href="AdminProdottiInEvidenza">Gestisci Prodotti in Evidenza</a>
-                                <a href="AdminUtenti">Utenti</a>
-                            </c:if>
-                            <c:if test="${!utente.admin}">
-                                <a href="Profilo">Profilo</a>
-                                <a href="Ordini">I miei ordini</a>
-                            </c:if>
-                            <a href="Logout">Logout</a>
-                        </div>
-                    </div>
-                </c:if>
-            </div>
-        </div>
-    </div>
+<%--    <div class="contieni-icona">--%>
+<%--        <div id="resp" class="icon-resp">--%>
+<%--            <div>--%>
+<%--                <span>--%>
+<%--                    <a href="javascript:void(0)" style="text-decoration: none" onclick="openNav()">--%>
+<%--&lt;%&ndash;                        <i class="fa fa-align-justify" style="font-size: 45px"></i>&ndash;%&gt;--%>
+<%--                    </a>--%>
+<%--                </span>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+
+<%--        <div id="myNav" class="overlay">--%>
+<%--            <a href="javascript:void(0)" style="text-decoration: none" onclick="closeNav()">&times;</a>--%>
+<%--            <div class="overlay-content">--%>
+<%--                <div class="menu-resp">--%>
+<%--                    <a class="responsive-menu" href="${pageContext.request.contextPath}/Negozio"--%>
+<%--                       style="text-decoration: none">Negozio</a>--%>
+<%--                </div>--%>
+<%--                <div class="menu-resp">--%>
+<%--                    <a class="responsive-menu" href="Libreria" style="text-decoration: none">La Tua Libreria</a>--%>
+<%--                </div>--%>
+<%--                <div class="menu-resp">--%>
+<%--                    <a class="responsive-menu" href="Assistenza" style="text-decoration: none">ASSISTENZA</a>--%>
+<%--                </div>--%>
+<%--                <div class="menu-resp">--%>
+<%--                    <a class="responsive-menu" href="Carrello" style="text-decoration: none">CARRELLO--%>
+<%--                        <c:if test="${carrello.prodotti.size() != null && carrello.prodotti.size() > 0}">--%>
+<%--                            (${carrello.prodotti.size()})--%>
+<%--                        </c:if>--%>
+<%--                    </a>--%>
+<%--                </div>--%>
+<%--                <div class="menu-resp">--%>
+<%--                    <c:if test="${utente == null}">--%>
+<%--                        <a class="responsive-menu" href="./login.jsp" style="text-decoration: none">LOGIN</a>--%>
+<%--                    </c:if>--%>
+<%--                </div>--%>
+<%--                <c:if test="${utente != null}">--%>
+<%--                    <div class="menu-resp">--%>
+<%--                        <a class="responsive-menu" href="#" style="text-decoration: none">${utente.username}</a>--%>
+<%--                        <div class="dropdown-content-ute" style="top:270px;">--%>
+<%--                            <c:if test="${utente.admin}">--%>
+<%--                                <a href="AdminCategoria">Aggiungi Categoria</a>--%>
+<%--                                <a href="AdminProdotto">Aggiungi Prodotto</a>--%>
+<%--                                <a href="AdminProdottiInEvidenza">Gestisci Prodotti in Evidenza</a>--%>
+<%--                                <a href="AdminUtenti">Utenti</a>--%>
+<%--                            </c:if>--%>
+<%--                            <c:if test="${!utente.admin}">--%>
+<%--                                <a href="Profilo">Profilo</a>--%>
+<%--                                <a href="Ordini">I miei ordini</a>--%>
+<%--                            </c:if>--%>
+<%--                            <a href="Logout">Logout</a>--%>
+<%--                        </div>--%>
+<%--                    </div>--%>
+<%--                </c:if>--%>
+<%--            </div>--%>
+<%--        </div>--%>
+<%--    </div>--%>
 
     <div class="container">
         <div class="logo">
