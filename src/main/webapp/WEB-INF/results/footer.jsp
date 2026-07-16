@@ -8,7 +8,7 @@
 <footer class="page-footer " ondblclick="chiudi(this)">
 
     <!-- Footer Links -->
-    <div class="container-fluid ">
+    <div class="container-fluid "> <!-- non fa nulla questa div class >
 
         <!-- Grid row -->
         <div class="roww">

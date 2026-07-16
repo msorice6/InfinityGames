@@ -1,0 +1,108 @@
+div.super_container{
+
+    background: #171a21;
+    width: 100%;
+    font-family: "Motiva Sans", Sans-serif;
+    font-weight: normal;
+    font-size: 14px;
+    position: relative;
+    /*height: 150px;*/
+}
+
+div.container{
+
+    width: 900px;
+    height: 150px;
+    background: #171a21;
+    margin: 0 auto;
+}
+
+div.logo {
+
+    float: left;
+    margin-top: 30px;
+    width: 250px;
+    height: 80%;
+
+}
+
+.logo-img{
+    background-color: #171a21;
+    float: left;
+    margin-left: 1px;
+}
+
+.imgName{
+    float: left;
+    margin-left: 10px;
+    margin-top: 15px;
+    color: #b8b6b4;
+}
+
+div.menu {
+    position: relative;
+    left: 50px;
+}
+
+ul.menu_tendina{
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #171a21;
+}
+
+li.dropdown{
+    float: left;
+    display: inline-block;
+}
+
+.dropdown-nonresp {
+    background: #171a21;
+    display: none;
+    position: absolute;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    top: 60px;
+    z-index: 1;
+}
+
+.dropdown-nonresp a {
+    color: #b8b6b4;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+
+}
+
+.dropdown-nonresp a:hover {
+    color: #f1f1f1;
+}
+
+a.menuitem {
+
+    position: relative;
+
+    margin: 45px 7px 7px 20px;
+    line-height: 16px;
+    float: left;
+    font-size: 14px;
+    color: #b8b6b4;
+    text-transform: uppercase;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+}
+
+a.menuitem:hover{
+    color: white;
+}
+
+
+/*
+non so che cosa fa:
+ */
+
+.dropdown:hover .dropdown-nonresp {
+    display: block;
+}

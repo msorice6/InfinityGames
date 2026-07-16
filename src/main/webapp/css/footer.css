@@ -19,6 +19,15 @@
     font-size: 20px;
     text-transform: uppercase;
 }
+
+.col-md{
+    display: inline-grid;
+    padding: 40px 0px;
+    float: right;
+    margin-right: 30px;
+
+}
+
 .list-unstyled{
     list-style-type: none;
 }
@@ -31,6 +40,7 @@
     text-decoration: none;
     color: lightgray;
 }
+
 .container-reg{
     display: inline-block;
 }
@@ -40,13 +50,6 @@
     padding: 10px;
     display: block;
     color: white;
-}
-.col-md{
-    display: inline-grid;
-    padding: 40px 0px;
-    float: right;
-    margin-right: 30px;
-
 }
 
 @media screen and (max-width: 588px){

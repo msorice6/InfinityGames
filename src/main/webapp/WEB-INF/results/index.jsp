@@ -1,6 +1,6 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <%@taglib prefix="c"
-          uri="http://java.sun.com/jsp/jstl/core"%>
+          uri="http://java.sun.com/jsp/jstl/core" %>
 
 <jsp:include page="banner.jsp">
     <jsp:param name="pageTitle" value="Home"/>
@@ -56,16 +56,18 @@
                             <a href="#" class="accordion">CATEGORIA</a>
                             <div class="dropdown-menu">
                                 <c:forEach items="${applicationScope.categorie}" var="categoria">
-                                    <a class="dropdown-item" href="Negozio?categoria=${categoria.id}">${categoria.nome}</a>
+                                    <a class="dropdown-item"
+                                       href="Negozio?categoria=${categoria.id}">${categoria.nome}</a>
                                 </c:forEach>
                             </div>
                         </li>
 
-                        <form class="form-inline" method = "get" action="Prodotto" id = "filtroForm">
-                            <input type="text" id = "inputText" name="id" list="ricerca-datalist" placeholder="Ricerca" onkeyup="ricerca(this.value)" value="<c:out value="${param.q}" />">
+                        <form class="form-inline" method="get" action="Prodotto" id="filtroForm">
+                            <input type="text" id="inputText" name="id" list="ricerca-datalist" placeholder="Ricerca"
+                                   onkeyup="ricerca(this.value)" value="<c:out value="${param.q}" />">
                             <button type="submit"><img src="./images/search.png" width="15px" height="15px"></button>
                             <datalist id="ricerca-datalist"></datalist>
-                            <p id="risultati"style="display: none;" > risultati in p </p>
+                            <p id="risultati" style="display: none;"> risultati in p </p>
                         </form>
                     </ul>
                 </nav>
@@ -73,11 +75,10 @@
                 <div class="slideshow-container">
                     <h2>IN EVIDENZA</h2>
                     <c:forEach items="${prodotti}" var="prodotto" begin="0" end="3">
-                        <div class="mySlides fade">
                             <a href="Prodotto?id=${prodotto.id}">
                                 <img src="./images/prodotti/${prodotto.images}">
                             </a>
-                        </div>
+<%--                        </div>--%>
                     </c:forEach>
 
                     <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
