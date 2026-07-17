@@ -6,23 +6,25 @@
     <title>Infinity Games - ${param.pageTitle}</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<%--    <link rel="stylesheet" href="./css/style.css" type="text/css"/>--%>
     <link rel="stylesheet" href="./css/footer.css" type="text/css"/>
     <link rel="stylesheet" href="./css/adminCategoria.css" type="text/css"/>
     <link rel="stylesheet" href="./css/utentiAdmin.css" type="text/css"/>
     <link rel="stylesheet" href="./css/adminProdotto.css" type="text/css"/>
     <link rel="stylesheet" href="./css/carrello.css" type="text/css"/>
-    <link rel="stylesheet" href="./css/categoria.css" type="text/css"/>
+<%--    <link rel="stylesheet" href="./css/categoria.css" type="text/css"/>--%>
     <link rel="stylesheet" href="./css/profilo.css" type="text/css"/>
     <link rel="stylesheet" href="./css/ordini.css" type="text/css"/>
     <link rel="stylesheet" href="./css/prodotto.css" type="text/css"/>
-    <link rel="stylesheet" href="./css/recenti.css" type="text/css"/>
     <link rel="stylesheet" href="./css/contatti.css" type="text/css"/>
     <link rel="stylesheet" href="./css/login.css" type="text/css"/>
 
+    <link rel="stylesheet" href="./css/desideri.css" type="text/css"/>
     <link rel="stylesheet" href="./css/banner.css" type="text/css"/>
     <link rel="stylesheet" href="./css/index.css" type="text/css"/>
     <link rel="stylesheet" href="./css/global.css" type="text/css"/>
+    <link rel="stylesheet" href="./css/footer.css" type="text/css"/>
+    <link rel="stylesheet" href="./css//assistenza.css" type="text/css"/>
+    <link rel="stylesheet" href="./css/listaProdotti.css" type="text/css"/>
 
     <script src="./javascript/menuRes.js"></script>
     <script src="./javascript/menuLaterale.js"></script>

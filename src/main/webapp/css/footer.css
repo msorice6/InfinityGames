@@ -1,84 +1,159 @@
-.page-footer{
+/* ==========================================================================
+   1. BASE FOOTER STYLES & LAYOUT
+   ========================================================================== */
+body {
+    background-color: #47648f; /* restringe i valori originali */
+    margin: 0px;
+    font-family: "Motiva Sans", Sans-serif;
+
+    /* AGGIUNGI QUESTI PER IL FOOTER APPICCICATO IN FONDO */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh; /* Forza il body a coprire tutta l'altezza dello schermo */
+}
+
+
+
+footer.page-footer {
     background-color: #171a21;
-    padding: 20px 0px;
-
+    color: #b8b6b4;
+    font-family: "Motiva Sans", Sans-serif;
+    padding: 40px 0;
+    width: 100%;
+    border-top: 1px solid #2a3f5a;
+    box-sizing: border-box;
+    margin-top: auto;
 }
-.roww{
-    width: 570px;
+
+.container-fluid {
+    width: 90%;
+    max-width: 1500px;
     margin: 0 auto;
+    padding: 0 15px;
 }
 
-.col-md-3  {
-    display: inline-grid;
-    padding: 25px 25px;
-    text-align: center;
-    transition: 0.5s;
+/* ==========================================================================
+   2. GRID COLUMN SYSTEM (Centered Flexbox)
+   ========================================================================== */
+.roww {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center; /* Centers the columns on the page horizontally */
+    margin-right: -15px;
+    margin-left: -15px;
 }
-.text-uppercase{
-    color: white;
-    font-size: 20px;
+
+.col-md-3 {
+    flex: 0 0 25%;
+    max-width: 25%;
+    padding: 0 15px;
+    box-sizing: border-box;
+    text-align: center;     /* Centers headings and lists inside */
+}
+
+.col-md {
+    flex: 0 0 25%;          /* Matches the 25% width of col-md-3 for symmetry */
+    max-width: 25%;
+    padding: 0 15px;
+    box-sizing: border-box;
+    text-align: center;     /* Changed from right-aligned to centered */
+}
+
+/* ==========================================================================
+   3. TYPOGRAPHY & LINKS
+   ========================================================================== */
+footer.page-footer p.text-uppercase {
+    color: #ffffff;
+    font-size: 14px;
+    font-weight: bold;
     text-transform: uppercase;
+    margin: 0 0 20px 0;
+    letter-spacing: 1px;
 }
 
-.col-md{
-    display: inline-grid;
-    padding: 40px 0px;
-    float: right;
-    margin-right: 30px;
-
-}
-
-.list-unstyled{
-    list-style-type: none;
-}
-
-.list-unstyled li {
-    padding: 10px 0px
-}
-
-.list-unstyled a{
+footer.page-footer a {
+    color: #b8b6b4;
     text-decoration: none;
-    color: lightgray;
+    font-size: 14px;
+    transition: color 0.3s ease;
 }
 
-.container-reg{
+footer.page-footer a:hover {
+    color: #ffffff;
+}
+
+/* List Formatting */
+ul.list-unstyled {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul.list-unstyled li {
+    margin-bottom: 12px;
+}
+
+.list-inline-item {
     display: inline-block;
 }
-.radius{
-    border: solid 1px white;
-    border-radius: 15px;
-    padding: 10px;
+
+/* ==========================================================================
+   4. RADIUS CALL TO ACTION (Button Style)
+   ========================================================================== */
+.radius {
+    display: inline-block;
+    background-color: #47648f;
+    border-radius: 4px;
+    padding: 10px 20px;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    cursor: pointer;
+    margin-top: 10px;
+}
+
+.radius:hover {
+    background-color: #9CC3FF;
+}
+
+.radius a {
+    color: #ffffff !important;
+    font-weight: bold;
+    text-transform: uppercase;
+    font-size: 13px;
+    letter-spacing: 0.5px;
     display: block;
-    color: white;
 }
 
-@media screen and (max-width: 588px){
-    .roww{
-        width: 100%;
-    }
+.radius:hover a {
+    color: #171a21 !important;
 }
 
-@media screen and (max-width: 548px){
-    .col-md-3{
-       padding: 25px 5px;
+/* ==========================================================================
+   5. MOBILE RESPONSIVENESS
+   ========================================================================== */
+@media screen and (max-width: 768px) {
+    footer.page-footer {
+        padding: 40px 0 20px 0;
     }
-}
-@media screen and (max-width: 214px){
-    .text-uppercase{
-        font-size: 20px;
+
+    .roww {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
     }
-    .list-unstyled{
-        padding-left: 10%;
+
+    .col-md-3, .col-md {
+        flex: 0 0 100%;
+        max-width: 100%;
+        margin-bottom: 30px;
+        text-align: center;
     }
-}
-@media screen and (max-width: 149px){
-    .col-md-3{
-        padding: 0px;
+
+    .col-md {
+        margin-bottom: 0;
     }
-}
-@media screen and (max-width: 468px){
-    .col-md{
-        float: none;
-        margin-right: 0px;
+
+    footer.page-footer p.text-uppercase {
+        margin-bottom: 10px;
     }
+
 }

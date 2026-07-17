@@ -1,0 +1,97 @@
+/* ==========================================================================
+   1. BASE ASSISTENZA CONTAINER STYLES
+   ========================================================================== */
+.assistenza {
+    width: 500px;
+    margin: 40px auto;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #ffffff;
+    text-align: center;
+    box-sizing: border-box;
+}
+
+.assistenza p {
+    font-size: 16px;
+    line-height: 1.5;
+}
+
+.assistenza a {
+    color: #9CC3FF;
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.assistenza a:hover {
+    color: #ffffff;
+}
+
+/* Parent container holding the three columns */
+.contieni-assistenza {
+    margin-top: 30px;
+    text-align: center;
+}
+
+/* ==========================================================================
+   2. AFFIANCA BLOCKS (Side-by-side elements)
+   ========================================================================== */
+.affianca {
+    display: inline-block;
+    width: 150px;
+    vertical-align: top;
+    margin: 10px 7px;
+    transition: transform 0.3s ease;
+}
+
+.affianca:hover {
+    transform: translateY(-5px); /* Adds a subtle, professional hover elevation */
+}
+
+.affianca img {
+    width: 90%;
+    /*
+       Note on original style.css 'height: 20%':
+       In CSS, a percentage height on an image needs a parent container with a fixed height.
+       Without it, the image squashes. Changed to 'height: auto' to safely preserve original aspect ratio.
+    */
+    height: auto;
+    max-height: 120px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.affianca a {
+    display: block;
+    color: #ffffff;
+    font-weight: bold;
+    font-size: 15px;
+    margin-top: 12px;
+    text-decoration: none;
+}
+
+.affianca a:hover {
+    color: #9CC3FF;
+}
+
+.affianca p {
+    font-size: 12px;
+    color: #b8b6b4; /* Muted gray text color matching the global/banner design */
+    margin-top: 6px;
+    line-height: 1.3;
+}
+
+/* ==========================================================================
+   3. RESPONSIVE MEDIA QUERIES (Original Breakpoints)
+   ========================================================================== */
+@media screen and (max-width: 530px) {
+    .assistenza {
+        width: 100%;
+        padding: 0 20px;
+    }
+}
+
+@media screen and (max-width: 170px) {
+    .affianca {
+        width: 100%;
+        margin: 15px 0;
+    }
+}
