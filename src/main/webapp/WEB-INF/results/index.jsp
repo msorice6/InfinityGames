@@ -12,28 +12,40 @@
             <div class="fianco">
                 <h2>IN SCONTO</h2>
 
-                <c:forEach items="${sconti}" var="prodotto" begin="0" end="2">
-                    <div class="sconti">
-                        <div>
-                            <a href="Prodotto?id=${prodotto.id}">
-                                <img src="./images/prodotti/${prodotto.images}">
-                            </a>
-                        </div>
-                        <div class="sub-sc">
-                            <div class="sc1">
-                                    ${prodotto.sconto}%
-                            </div>
-                            <div class="sc2">
+                <div class="sconti-container">
+                    <c:forEach items="${sconti}" var="prodotto" begin="0" end="2">
+                        <!-- Aggiunta classe mySlidesSconti e animazione fade -->
+                        <div class="mySlidesSconti fade">
+                            <div class="sconti">
                                 <div>
-                                    <del>${String.format("%.2f",prodotto.prezzo)}€</del>
+                                    <a href="Prodotto?id=${prodotto.id}">
+                                        <img src="./images/prodotti/${prodotto.images}">
+                                    </a>
                                 </div>
-                                <div>
-                                        ${String.format("%.2f",prodotto.prezzo = prodotto.prezzo - (prodotto.prezzo*prodotto.sconto)/100)}€
+                                <div class="sub-sc">
+                                    <div class="sc1">
+                                            ${prodotto.sconto}%
+                                    </div>
+                                    <div class="sc2">
+                                        <div>
+                                            <del>${String.format("%.2f",prodotto.prezzo)}€</del>
+                                        </div>
+                                        <div>
+                                                ${String.format("%.2f",prodotto.prezzo = prodotto.prezzo - (prodotto.prezzo*prodotto.sconto)/100)}€
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </c:forEach>
+
+                    <div id="frecceSconti" style="text-align:center">
+                    <!-- Frecce di navigazione  -->
+                        <a class="prev" onclick="plusSlidesSconti(-1)">&#10094;</a>
+                        <a class="next" onclick="plusSlidesSconti(1)">&#10095;</a>
+
                     </div>
-                </c:forEach>
+                </div>
             </div>
 
             <div class="allinea">

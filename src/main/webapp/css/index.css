@@ -1,5 +1,5 @@
 /* ==========================================================================
-   1. GLOBAL / BASE RESETS (Critical for layout sizing and tags)
+    GLOBAL / BASE RESETS (Critical for layout sizing and tags)
    ========================================================================== */
 * {
     box-sizing: border-box;
@@ -17,7 +17,7 @@ img {
 }
 
 /* ==========================================================================
-   2. HOMEPAGE GRID & WRAPPER LAYOUT
+    HOMEPAGE GRID & WRAPPER LAYOUT
    ========================================================================== */
 .container_row {
     background-color: #47648f;
@@ -73,7 +73,7 @@ img {
 }
 
 /* ==========================================================================
-   3. NAVBAR & INTERACTIVE ACCORDIONS
+    NAVBAR & INTERACTIVE ACCORDIONS
    ========================================================================== */
 nav.navbar {
     background-color: #9CC3FF;
@@ -151,7 +151,7 @@ a.dropdown-item:hover {
 }
 
 /* ==========================================================================
-   4. SLIDESHOW CAROUSEL (Uncommented & Restored)
+    SLIDESHOW PRODOTTI IN EVIDENZA
    ========================================================================== */
 .slideshow-container {
     max-width: 660px;
@@ -165,12 +165,15 @@ a.dropdown-item:hover {
 .mySlides img {
     width: 100%;
     height: 450px;
+
 }
 
 .visibile {
     display: block;
 }
-
+/* ==========================================================================
+    SLIDESHOW PRODOTTI IN EVIDENZA e SCONTATI
+   ========================================================================== */
 /* Navigational Arrows */
 .prev, .next {
     cursor: pointer;
@@ -187,6 +190,9 @@ a.dropdown-item:hover {
     user-select: none;
 }
 
+.prev{
+    left:0;
+}
 .next {
     right: 0;
     border-radius: 3px 0 0 3px;
@@ -239,7 +245,25 @@ a.dropdown-item:hover {
 }
 
 /* ==========================================================================
-   5. VERTICAL CATEGORY MENU (Drinks)
+   SlIDESHOW SCONTI
+   ========================================================================== */
+.sconti-container {
+    position: relative;
+    width: 300px;
+    margin-bottom: 50px;
+}
+
+.mySlidesSconti {
+    display: none;
+}
+
+.sconti-container .frecceSconti .prev, .sconti-container .frecceSconti .next {
+    top: 50%;
+}
+
+
+/* ==========================================================================
+    VERTICAL CATEGORY MENU (Drinks)
    ========================================================================== */
 #drinks {
     float: right;
@@ -272,7 +296,7 @@ a.vertical_item:hover {
 }
 
 /* ==========================================================================
-   6. RESPONSIVENESS AND MEDIA QUERIES
+    RESPONSIVENESS AND MEDIA QUERIES
    ========================================================================== */
 @media screen and (max-width: 1500px) {
     .homepage {
