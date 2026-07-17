@@ -6,7 +6,7 @@
     <jsp:param name="pageTitle" value="Home"/>
 </jsp:include>
 
-<div class="container_row" ondblclick="chiudi(this)">
+<div class="container_row" >
     <div class="homepage">
         <div class="totale">
             <div class="fianco">
@@ -52,10 +52,8 @@
                 <nav class="navbar">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a href="#" class="accordion">IL TUO NEGOZIO</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="Recenti">Visualizzati di recente</a>
-                            </div>
+                            <a href="./Negozio" class="accordion">IL TUO NEGOZIO</a>
+
                         </li>
                         <li class="nav-item">
                             <a href="#" class="accordion">GIOCHI</a>
@@ -72,6 +70,30 @@
                                 </c:forEach>
                             </div>
                         </li>
+
+                        <span class ="hid-index">
+                            <li class="nav-item">
+                                <a href="./Libreria" class="accordion">LA TUA LIBRERIA</a>
+                            </li>
+                        </span>
+
+                        <span class ="hid-index">
+                            <li class="nav-item">
+                                <a href="./Assistenza" class="accordion">ASSISTENZA</a>
+                            </li>
+                        </span>
+
+                        <span class ="hid-index">
+                            <li class="nav-item">
+                                <a href="./Carrello" class="accordion">CARRELLO</a>
+                            </li>
+                        </span>
+
+                        <span class ="hid-index">
+                            <li class="nav-item">
+                                <a href="./login.jsp" class="accordion">LOGIN</a>
+                            </li>
+                        </span>
 
                         <form class="form-inline" method = "get" action="Prodotto" id = "filtroForm">
                             <input type="text" id = "inputText" name="id" list="ricerca-datalist" placeholder="Ricerca" onkeyup="ricerca(this.value)" value="<c:out value="${param.q}" />">
