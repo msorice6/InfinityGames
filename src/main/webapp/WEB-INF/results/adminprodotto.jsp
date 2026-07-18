@@ -9,6 +9,8 @@
 <jsp:include page="banner.jsp">
     <jsp:param name="pageTitle" value="AdminProdotto"/>
 </jsp:include>
+<c:choose>
+    <c:when test="${utente != null && utente.isAdmin()}">
 
 <div class="add-prod" ondblclick="chiudi(this)">
     <h1>${operazione} prodotto</h1>
@@ -54,6 +56,11 @@
         </div>
     </c:if>
 </div>
+</c:when>
+<c:otherwise>
+    <c:redirect url="error.jsp"/>
+</c:otherwise>
+</c:choose>
 <jsp:include page="footer.jsp"/>
 
 

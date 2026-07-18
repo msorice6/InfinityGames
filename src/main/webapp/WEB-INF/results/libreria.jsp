@@ -12,7 +12,7 @@
 
 <c:choose>
     <c:when test="${utente != null}">
-        <div class="contain" ondblclick="chiudi(this)">
+        <div class="contain" >
             <div class="contain_all">
 
                 <p>IN QUESTA SEZIONE PUOI TROVARE I TUOI GIOCHI</p>

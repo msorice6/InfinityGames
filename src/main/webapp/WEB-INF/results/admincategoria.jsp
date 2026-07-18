@@ -9,6 +9,10 @@
 <jsp:include page="banner.jsp">
     <jsp:param name="pageTitle" value="Categoria"/>
 </jsp:include>
+
+<c:choose>
+    <c:when test="${utente != null && utente.isAdmin()}">
+
 <div class="cat-all" ondblclick="chiudi(this)">
     <div class="font">
         <div>
@@ -36,5 +40,11 @@
         </div>
     </div>
 </div>
+    </c:when>
+    <c:otherwise>
+        <c:redirect url="error.jsp"/>
+    </c:otherwise>
+</c:choose>
+
 <jsp:include page="footer.jsp"/>
 

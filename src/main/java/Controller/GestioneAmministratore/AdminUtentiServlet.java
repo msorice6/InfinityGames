@@ -10,6 +10,8 @@ import jakarta.servlet.annotation.WebServlet;
 import jakarta.servlet.http.HttpServlet;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
+
 import java.io.IOException;
 import java.util.List;
 
@@ -17,19 +19,22 @@ import java.util.List;
 public class AdminUtentiServlet extends HttpServlet {
     private final UtenteDAO utenteDAO = new UtenteDAO();
 
-    protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-
-        doGet(request, response);
-    }
-
     protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        // 1. CONTROLLO ACCESSO LATO SERVER
+        HttpSession session = request.getSession();
+        Utente utente = (Utente) session.getAttribute("utente");
 
-        MyServletException.checkAdmin(request);
+        // Se l'utente non è loggato oppure non è admin
+        if (utente == null || !utente.isAdmin()) {
+            response.sendRedirect(request.getContextPath() + "/error.jsp");
+        } else {
+            MyServletException.checkAdmin(request);
 
-        List<Utente> utenti = utenteDAO.doRetrieveAll();
-        request.setAttribute("utenti", utenti);
+            List<Utente> utenti = utenteDAO.doRetrieveAll();
+            request.setAttribute("utenti", utenti);
 
-        RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/results/adminutenti.jsp");
-        requestDispatcher.forward(request, response);
+            RequestDispatcher requestDispatcher = request.getRequestDispatcher("WEB-INF/results/adminutenti.jsp");
+            requestDispatcher.forward(request, response);
+        }
     }
 }

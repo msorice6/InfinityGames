@@ -6,6 +6,8 @@
 <jsp:include page="banner.jsp">
     <jsp:param name="pageTitle" value="AdminUtenti"/>
 </jsp:include>
+<c:choose>
+    <c:when test="${utente != null && utente.isAdmin()}">
 
 <div class="utenti" ondblclick="chiudi(this)">
     <p>CIAO ${utente.username}. IN QUESTA SEZIONE PUOI VEDERE LA LISTA DEGLI UTENTI</p>
@@ -57,6 +59,10 @@
         </section>
     </div>
 </div>
-
+    </c:when>
+    <c:otherwise>
+        <c:redirect url="error.jsp"/>
+    </c:otherwise>
+</c:choose>
 <jsp:include page="footer.jsp"/>
 

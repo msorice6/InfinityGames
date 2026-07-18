@@ -80,102 +80,116 @@
     };
 </script>
 
-<div class="cat-all" ondblclick="chiudi(this)">
-    <div class="font">
-        <div>
-            <h1>Seleziona i prodotti da mettere in evidenza:</h1>
+<c:choose>
+    <c:when test="${utente != null && utente.isAdmin()}">
 
-            <c:if test="${notifica != null}">
-                <div style="color: green; margin-bottom: 20px;">
-                        ${notifica}
-                </div>
-            </c:if>
+        <div class="cat-all">
+            <div class="font">
+                <div>
+                    <h1>Seleziona i prodotti da mettere in evidenza:</h1>
 
-            <div>
-                <form action="AdminProdottiInEvidenza" method="post" onsubmit="return controllaDuplicati(this)"
-                      style="display: flex; flex-direction: column; gap: 20px; align-items: center; justify-content: center;">
-
-                    <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
-                        <!-- Selezione prodotto 1 -->
-                        <div style="text-align: center;">
-                            <label>Prodotto in evidenza 1:</label><br>
-                            <select name="prod1" style="width: 200px; height: 40px; font-size: 14px;" onchange="aggiornaSelect()">
-                                <c:forEach items="${tuttiProdottiOrdinati}" var="prodotto">
-                                    <option value="${prodotto.id}"
-                                            <c:if test="${prodottiEvidenza[0].id == prodotto.id}">selected</c:if>>
-                                            ${prodotto.nome}
-                                    </option>
-                                </c:forEach>
-                            </select>
+                    <c:if test="${notifica != null}">
+                        <div style="color: green; margin-bottom: 20px;">
+                                ${notifica}
                         </div>
-
-                        <!-- Selezione prodotto 2 -->
-                        <div style="text-align: center;">
-                            <label>Prodotto in evidenza 2:</label><br>
-                            <select name="prod2" style="width: 200px; height: 40px; font-size: 14px;" onchange="aggiornaSelect()">
-                                <c:forEach items="${tuttiProdottiOrdinati}" var="prodotto">
-                                    <option value="${prodotto.id}"
-                                            <c:if test="${prodottiEvidenza[1].id == prodotto.id}">selected</c:if>>
-                                            ${prodotto.nome}
-                                    </option>
-                                </c:forEach>
-                            </select>
-                        </div>
-
-                        <!-- Selezione prodotto 3 -->
-                        <div style="text-align: center;">
-                            <label>Prodotto in evidenza 3:</label><br>
-                            <select name="prod3" style="width: 200px; height: 40px; font-size: 14px;" onchange="aggiornaSelect()">
-                                <c:forEach items="${tuttiProdottiOrdinati}" var="prodotto">
-                                    <option value="${prodotto.id}"
-                                            <c:if test="${prodottiEvidenza[2].id == prodotto.id}">selected</c:if>>
-                                            ${prodotto.nome}
-                                    </option>
-                                </c:forEach>
-                            </select>
-                        </div>
-
-                        <!-- Selezione prodotto 4 -->
-                        <div style="text-align: center;">
-                            <label>Prodotto in evidenza 4:</label><br>
-                            <select name="prod4" style="width: 200px; height: 40px; font-size: 14px;" onchange="aggiornaSelect()">
-                                <c:forEach items="${tuttiProdottiOrdinati}" var="prodotto">
-                                    <option value="${prodotto.id}"
-                                            <c:if test="${prodottiEvidenza[3].id == prodotto.id}">selected</c:if>>
-                                            ${prodotto.nome}
-                                    </option>
-                                </c:forEach>
-                            </select>
-                        </div>
-                    </div>
+                    </c:if>
 
                     <div>
-                        <input type="submit" value="Salva Prodotti in Evidenza"
-                               style="font-size: 16px; padding: 10px 20px;">
-                    </div>
-                </form>
-            </div>
+                        <form action="AdminProdottiInEvidenza" method="post" onsubmit="return controllaDuplicati(this)"
+                              style="display: flex; flex-direction: column; gap: 20px; align-items: center; justify-content: center;">
 
-            <!-- Anteprima prodotti in evidenza attuali - versione compatta -->
-            <c:if test="${prodottiEvidenza != null && fn:length(prodottiEvidenza) > 0}">
-                <div style="margin-top: 30px;">
-                    <h3>Prodotti in evidenza:</h3>
-                    <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
-                        <c:forEach items="${prodottiEvidenza}" var="prodotto">
-                            <c:if test="${prodotto != null}">
+                            <div style="display: flex; gap: 20px; flex-wrap: wrap; justify-content: center;">
+                                <!-- Selezione prodotto 1 -->
                                 <div style="text-align: center;">
-                                    <c:if test="${prodotto.images != null}">
-                                        <img src="images/prodotti/${prodotto.images}" style="width: 60px; height: 60px; object-fit: cover;">
-                                    </c:if>
-                                    <p style="font-size: 12px; margin: 5px 0;">${prodotto.nome}</p>
+                                    <label>Prodotto in evidenza 1:</label><br>
+                                    <select name="prod1" style="width: 200px; height: 40px; font-size: 14px;"
+                                            onchange="aggiornaSelect()">
+                                        <c:forEach items="${tuttiProdottiOrdinati}" var="prodotto">
+                                            <option value="${prodotto.id}"
+                                                    <c:if test="${prodottiEvidenza[0].id == prodotto.id}">selected</c:if>>
+                                                    ${prodotto.nome}
+                                            </option>
+                                        </c:forEach>
+                                    </select>
                                 </div>
-                            </c:if>
-                        </c:forEach>
+
+                                <!-- Selezione prodotto 2 -->
+                                <div style="text-align: center;">
+                                    <label>Prodotto in evidenza 2:</label><br>
+                                    <select name="prod2" style="width: 200px; height: 40px; font-size: 14px;"
+                                            onchange="aggiornaSelect()">
+                                        <c:forEach items="${tuttiProdottiOrdinati}" var="prodotto">
+                                            <option value="${prodotto.id}"
+                                                    <c:if test="${prodottiEvidenza[1].id == prodotto.id}">selected</c:if>>
+                                                    ${prodotto.nome}
+                                            </option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+
+                                <!-- Selezione prodotto 3 -->
+                                <div style="text-align: center;">
+                                    <label>Prodotto in evidenza 3:</label><br>
+                                    <select name="prod3" style="width: 200px; height: 40px; font-size: 14px;"
+                                            onchange="aggiornaSelect()">
+                                        <c:forEach items="${tuttiProdottiOrdinati}" var="prodotto">
+                                            <option value="${prodotto.id}"
+                                                    <c:if test="${prodottiEvidenza[2].id == prodotto.id}">selected</c:if>>
+                                                    ${prodotto.nome}
+                                            </option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+
+                                <!-- Selezione prodotto 4 -->
+                                <div style="text-align: center;">
+                                    <label>Prodotto in evidenza 4:</label><br>
+                                    <select name="prod4" style="width: 200px; height: 40px; font-size: 14px;"
+                                            onchange="aggiornaSelect()">
+                                        <c:forEach items="${tuttiProdottiOrdinati}" var="prodotto">
+                                            <option value="${prodotto.id}"
+                                                    <c:if test="${prodottiEvidenza[3].id == prodotto.id}">selected</c:if>>
+                                                    ${prodotto.nome}
+                                            </option>
+                                        </c:forEach>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div>
+                                <input type="submit" value="Salva Prodotti in Evidenza"
+                                       style="font-size: 16px; padding: 10px 20px;">
+                            </div>
+                        </form>
                     </div>
+
+                    <!-- Anteprima prodotti in evidenza attuali - versione compatta -->
+                    <c:if test="${prodottiEvidenza != null && fn:length(prodottiEvidenza) > 0}">
+                        <div style="margin-top: 30px;">
+                            <h3>Prodotti in evidenza:</h3>
+                            <div style="display: flex; gap: 10px; justify-content: center; flex-wrap: wrap;">
+                                <c:forEach items="${prodottiEvidenza}" var="prodotto">
+                                    <c:if test="${prodotto != null}">
+                                        <div style="text-align: center;">
+                                            <c:if test="${prodotto.images != null}">
+                                                <img src="images/prodotti/${prodotto.images}"
+                                                     style="width: 60px; height: 60px; object-fit: cover;">
+                                            </c:if>
+                                            <p style="font-size: 12px; margin: 5px 0;">${prodotto.nome}</p>
+                                        </div>
+                                    </c:if>
+                                </c:forEach>
+                            </div>
+                        </div>
+                    </c:if>
                 </div>
-            </c:if>
+            </div>
         </div>
-    </div>
-</div>
+
+    </c:when>
+    <c:otherwise>
+        <c:redirect url="error.jsp"/>
+    </c:otherwise>
+</c:choose>
 
 <jsp:include page="footer.jsp"/>
