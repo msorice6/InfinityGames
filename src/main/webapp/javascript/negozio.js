@@ -1,4 +1,3 @@
-
 // 1. We must define the function that builds the HTML here so the script knows what to do
 function createProductCardWithTemplate(prodotto) {
     var divContieni = document.createElement('div');
@@ -27,7 +26,6 @@ function createProductCardWithTemplate(prodotto) {
         }
         categorieHtml = catLinks.join(', ');
     }
-
     // Fallbacks just in case the JSON is missing data
     var images = prodotto.images ? prodotto.images : 'default.png';
     var quantVend = prodotto.quant_vend ? prodotto.quant_vend : 0;
@@ -64,14 +62,11 @@ function createProductCardWithTemplate(prodotto) {
 
 // 2. Your main AJAX function
 function negozio(paginaRichiesta) {
-    alert("sei a pagina: "+ paginaRichiesta);
     var inputElement = document.getElementById("inputText");
     var str = inputElement ? inputElement.value : "";
 
     var currentOrd = document.getElementById("ordineSelect").value;
     var currentCategoria = document.getElementById("categoriaSelect").value;
-
-    var currentPagina = paginaRichiesta;
 
     var xmlHttpReq = new XMLHttpRequest();
     xmlHttpReq.responseType = 'json';
@@ -92,22 +87,85 @@ function negozio(paginaRichiesta) {
                 return;
             }
 
+            var pagProdottoCategoria;
             // 3. THIS MUST NOT BE COMMENTED OUT. Loop through the JSON and draw the elements.
             prodotti.forEach(function(prodotto) {
                 var newCard = createProductCardWithTemplate(prodotto);
                 menuContainer.appendChild(newCard);
+                pagProdottoCategoria = prodotto.npag;
             });
+
+            if(currentCategoria > 0)
+//                    alert("num Pagine del prodotto: "+ pagProdottoCategoria);
+                aggiornaPaginazione(pagProdottoCategoria);
         }
     }
 
     var requestUrl = "NegozioAjax?ord=" + encodeURIComponent(currentOrd) +
         "&categoria=" + encodeURIComponent(currentCategoria) +
-        "&q=" + encodeURIComponent(str) +
-        "&pag=" + encodeURIComponent(paginaRichiesta)
-
-
-    ;
+        "&q=" + encodeURIComponent(str);
 
     xmlHttpReq.open("GET", requestUrl, true);
     xmlHttpReq.send();
 }
+
+function cambiaPagina(pag) {
+    // 1. Leggi i valori attualmente selezionati
+    var currentOrd = document.getElementById("ordineSelect").value;
+    var currentCategoria = document.getElementById("categoriaSelect").value;
+
+    // Leggi anche la barra di ricerca, se esiste
+    var inputElement = document.getElementById("inputText");
+    var currentQ = inputElement ? inputElement.value : "";
+
+    // 2. Costruisci l'URL verso la Servlet classica (Negozio)
+    var url = "Negozio?categoria=" + encodeURIComponent(currentCategoria) +
+        "&ord=" + encodeURIComponent(currentOrd) +
+        "&q=" + encodeURIComponent(currentQ) +
+        "&pag=" + encodeURIComponent(pag) +
+        "&perpag=12";
+
+    // 3. Esegui il reindirizzamento
+    window.location.href = url;
+}
+
+function aggiornaPaginazione(npag, pagCorrente = 1) {
+    var container = document.getElementById('paginazione');
+    if (!container) return;
+
+    // Svuota il contenitore prima di aggiornarlo
+    container.innerHTML = '';
+
+    // Assicurati che npag sia un intero
+    npag = parseInt(npag);
+
+    // Se c'è una sola pagina (o zero), non mostrare la barra di paginazione
+    if (isNaN(npag) || npag <= 1) {
+        return;
+    }
+
+    var html = '';
+
+    // Genera il link "precedente" se non siamo alla prima pagina
+    if (pagCorrente > 1) {
+        html += '<a href="#" onclick="cambiaPagina(' + (pagCorrente - 1) + '); return false;">&larr; precedente</a>&emsp;';
+    }
+
+    // Genera i numeri delle pagine
+    for (var i = 1; i <= npag; i++) {
+        if (i === pagCorrente) {
+            html += '<b>' + i + '</b>&emsp;'; // Pagina attiva non cliccabile
+        } else {
+            html += '<a href="#" onclick="cambiaPagina(' + i + '); return false;">' + i + '</a>&emsp;';
+        }
+    }
+
+    // Genera il link "successiva" se non siamo all'ultima pagina
+    if (pagCorrente < npag) {
+        html += '<a href="#" onclick="cambiaPagina(' + (pagCorrente + 1) + '); return false;">successiva &rarr;</a>';
+    }
+
+    // Inserisce il nuovo HTML nel contenitore
+    container.innerHTML = html;
+}
+
