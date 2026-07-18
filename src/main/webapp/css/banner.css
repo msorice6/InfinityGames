@@ -1,0 +1,245 @@
+/* ==========================================================================
+   1. MAIN BANNER & CONTAINER LAYOUT
+   ========================================================================== */
+div.super_container {
+    background: #171a21;
+    width: 100%;
+    font-family: "Motiva Sans", Sans-serif;
+    font-weight: normal;
+    font-size: 14px;
+    position: relative;
+}
+
+div.container {
+    width: 900px;
+    height: 150px;
+    background: #171a21;
+    margin: 0 auto;
+}
+
+/* ==========================================================================
+   2. LOGO SECTION
+   ========================================================================== */
+div.logo {
+    float: left;
+    margin-top: 30px;
+    width: 250px;
+    height: 80%;
+}
+
+.logo-img {
+    background-color: #171a21;
+    float: left;
+    margin-left: 1px;
+}
+
+.imgName {
+    float: left;
+    margin-left: 10px;
+    margin-top: 15px;
+    color: #b8b6b4;
+}
+
+/* ==========================================================================
+   3. DESKTOP NAVIGATION MENU & DROPDOWNS
+   ========================================================================== */
+div.menu {
+    position: relative;
+    left: 50px;
+}
+
+ul.menu_tendina {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #171a21;
+}
+
+li.dropdown {
+    float: left;
+    display: inline-block;
+}
+
+a.menuitem {
+    position: relative;
+    margin: 45px 7px 7px 20px;
+    line-height: 16px;
+    float: left;
+    font-size: 14px;
+    color: #b8b6b4;
+    text-transform: uppercase;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+}
+
+a.menuitem:hover {
+    color: white;
+}
+
+/* Desktop Dropdown Container */
+.dropdown-nonresp {
+    background: #171a21;
+    display: none;
+    position: absolute;
+    box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+    top: 60px;
+    z-index: 1;
+}
+
+.dropdown-nonresp a {
+    color: #b8b6b4;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-nonresp a:hover {
+    color: #f1f1f1;
+}
+
+/* Triggers Dropdown Menu on Desktop Hover */
+.dropdown:hover .dropdown-nonresp {
+    display: block;
+}
+
+/* ==========================================================================
+   4. RESPONSIVE MOBILE OVERLAY (Previously Missing)
+   ========================================================================== */
+.super_container div.icon-resp {
+    display: none;
+}
+
+.overlay {
+    height: 100%;
+    width: 0;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    left: 0;
+    background: #171a21;
+    overflow-x: hidden;
+    transition: 0.5s;
+}
+
+.overlay-content {
+    position: relative;
+    width: 100%;
+}
+
+.menu-resp {
+    border-bottom: 1px solid white;
+    font-size: 16px;
+}
+
+.freccia {
+    display: inline;
+    color: white;
+}
+
+.drop {
+    border-bottom: 1px solid white;
+}
+
+.contieni-icona {
+    display: contents;
+}
+
+a.responsive-menu {
+    position: relative;
+    text-decoration: none;
+    padding: 0 12px;
+    overflow: hidden;
+    line-height: 2.5em;
+    color: #b8b6b4;
+    text-transform: uppercase;
+}
+
+a.responsive-menu:hover {
+    color: white;
+}
+
+/* Mobile Dropdown Options */
+.dropdown-content, .dropdown-content-ute {
+    height: 0;
+    overflow: hidden;
+    background: #171a21;
+    transition: height 0.5s, background 0.25s, color 0.25s;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.dropdown-content a, .dropdown-content-ute a {
+    color: #b8b6b4;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+.dropdown-content a {
+    font-size: 14px;
+}
+
+.dropdown-content-ute a {
+    font-size: 18px;
+}
+
+.dropdown-content a:hover, .dropdown-content-ute a:hover {
+    color: #f1f1f1;
+}
+
+/* ==========================================================================
+   5. RESPONSIVE MEDIA QUERIES
+   ========================================================================== */
+@media screen and (max-width: 1010px) {
+    div.super_container {
+        height: 100px;
+    }
+    .super_container .container {
+        height: 100px;
+        width: auto;
+    }
+    .container div.logo {
+        margin-top: 0px;
+        margin-left: 26%;
+        position: absolute;
+        width: 250px;
+    }
+    .menu:not(:first-child) {
+        display: none;
+    }
+    .super_container div.icon-resp {
+        color: white;
+        padding: 15px;
+        height: 100%;
+        float: left;
+        display: block;
+    }
+    li.nav-item div.dropdown-menu {
+        top: 166px;
+    }
+}
+
+@media screen and (max-width: 360px) {
+    .imgName {
+        display: none;
+    }
+    .container div.logo {
+        width: 74%;
+    }
+}
+
+@media screen and (max-width: 330px) {
+    .menu-resp {
+        font-size: 12px;
+    }
+    .responsive-menu {
+        padding: 0px;
+    }
+    .dropdown-content a {
+        font-size: 10px;
+    }
+}

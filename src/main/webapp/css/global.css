@@ -1,0 +1,13 @@
+
+.container_menu{
+
+    position: relative;
+    background: #171a21;
+    width: 200px;
+}
+
+body {
+    background-color: #47648f;
+    margin: 0px;
+    font-family: "Motiva Sans", Sans-serif;
+}

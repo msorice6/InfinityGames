@@ -1,0 +1,81 @@
+.contain{
+    width: 800px;
+    margin: 20px auto;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+@media screen and (max-width: 808px){
+    .contain{
+        width: 98%;
+        margin: 30px auto;
+    }
+    .tab-bar{
+        height: 21px;
+    }
+    .ordina{
+        margin-left: 0px;
+        width: 100%;
+        margin-top: 7px;
+    }
+    .contieni{
+        font-size: 15px;
+    }
+
+}
+
+@media screen and (max-width: 294px){
+
+    .contieni{
+        height: 220px;
+    }
+    .col-2-right{
+        display: none;
+    }
+    .sub-prezzo h5{
+        margin-top: 0px;
+    }
+    .name-over h5{
+        margin-bottom: 0px;
+    }
+    .sub-img img{
+        width: 100%;
+    }
+}
+.contieni{
+    padding: 10px;
+    background-color: slategray;
+    height: 150px;
+    transition: 0.5s;
+    border-bottom: solid 1px;
+}
+
+.img-col{
+    float: left;
+    margin-right: 10px;
+}
+
+.sub-img img{
+    width: 100px;
+    height: 120px;
+}
+.col-2{
+    display: inline-block;
+}
+
+.right-col{
+    display: inline-block;
+    height: 120px;
+}
+
+.name-over{
+
+}
+
+.prezzo-down{
+
+}
+
+.col-2-right{
+    float: right;
+    margin-right: 8%
+}

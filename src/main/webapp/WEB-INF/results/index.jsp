@@ -6,44 +6,54 @@
     <jsp:param name="pageTitle" value="Home"/>
 </jsp:include>
 
-<div class="container_row" ondblclick="chiudi(this)">
+<div class="container_row" >
     <div class="homepage">
         <div class="totale">
             <div class="fianco">
                 <h2>IN SCONTO</h2>
 
-                <c:forEach items="${sconti}" var="prodotto" begin="0" end="2">
-                    <div class="sconti">
-                        <div>
-                            <a href="Prodotto?id=${prodotto.id}">
-                                <img src="./images/prodotti/${prodotto.images}">
-                            </a>
-                        </div>
-                        <div class="sub-sc">
-                            <div class="sc1">
-                                    ${prodotto.sconto}%
-                            </div>
-                            <div class="sc2">
+                <div class="sconti-container">
+                    <c:forEach items="${sconti}" var="prodotto" begin="0" end="2">
+                        <!-- Aggiunta classe mySlidesSconti e animazione fade -->
+                        <div class="mySlidesSconti fade">
+                            <div class="sconti">
                                 <div>
-                                    <del>${String.format("%.2f",prodotto.prezzo)}€</del>
+                                    <a href="Prodotto?id=${prodotto.id}">
+                                        <img src="./images/prodotti/${prodotto.images}">
+                                    </a>
                                 </div>
-                                <div>
-                                        ${String.format("%.2f",prodotto.prezzo = prodotto.prezzo - (prodotto.prezzo*prodotto.sconto)/100)}€
+                                <div class="sub-sc">
+                                    <div class="sc1">
+                                            ${prodotto.sconto}%
+                                    </div>
+                                    <div class="sc2">
+                                        <div>
+                                            <del>${String.format("%.2f",prodotto.prezzo)}€</del>
+                                        </div>
+                                        <div>
+                                                ${String.format("%.2f",prodotto.prezzo = prodotto.prezzo - (prodotto.prezzo*prodotto.sconto)/100)}€
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
+                    </c:forEach>
+
+                    <div id="frecceSconti" style="text-align:center">
+                    <!-- Frecce di navigazione  -->
+                        <a class="prev" onclick="plusSlidesSconti(-1)">&#10094;</a>
+                        <a class="next" onclick="plusSlidesSconti(1)">&#10095;</a>
+
                     </div>
-                </c:forEach>
+                </div>
             </div>
 
             <div class="allinea">
                 <nav class="navbar">
                     <ul class="navbar-nav">
                         <li class="nav-item">
-                            <a href="#" class="accordion">IL TUO NEGOZIO</a>
-                            <div class="dropdown-menu">
-                                <a class="dropdown-item" href="Recenti">Visualizzati di recente</a>
-                            </div>
+                            <a href="./Negozio" class="accordion">IL TUO NEGOZIO</a>
+
                         </li>
                         <li class="nav-item">
                             <a href="#" class="accordion">GIOCHI</a>
@@ -60,6 +70,30 @@
                                 </c:forEach>
                             </div>
                         </li>
+
+                        <span class ="hid-index">
+                            <li class="nav-item">
+                                <a href="./Libreria" class="accordion">LA TUA LIBRERIA</a>
+                            </li>
+                        </span>
+
+                        <span class ="hid-index">
+                            <li class="nav-item">
+                                <a href="./Assistenza" class="accordion">ASSISTENZA</a>
+                            </li>
+                        </span>
+
+                        <span class ="hid-index">
+                            <li class="nav-item">
+                                <a href="./Carrello" class="accordion">CARRELLO</a>
+                            </li>
+                        </span>
+
+                        <span class ="hid-index">
+                            <li class="nav-item">
+                                <a href="./login.jsp" class="accordion">LOGIN</a>
+                            </li>
+                        </span>
 
                         <form class="form-inline" method = "get" action="Prodotto" id = "filtroForm">
                             <input type="text" id = "inputText" name="id" list="ricerca-datalist" placeholder="Ricerca" onkeyup="ricerca(this.value)" value="<c:out value="${param.q}" />">

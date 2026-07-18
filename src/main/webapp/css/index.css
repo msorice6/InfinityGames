@@ -1,0 +1,413 @@
+/* ==========================================================================
+    GLOBAL / BASE RESETS (Critical for layout sizing and tags)
+   ========================================================================== */
+* {
+    box-sizing: border-box;
+}
+
+h2 {
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+img {
+    vertical-align: middle;
+}
+
+/* ==========================================================================
+    HOMEPAGE GRID & WRAPPER LAYOUT
+   ========================================================================== */
+.container_row {
+    background-color: #47648f;
+    font-family: Arial, Helvetica, sans-serif;
+}
+
+.homepage {
+    width: 1500px;
+    margin: 0 auto;
+}
+
+.totale {
+    display: flow-root;
+    margin-right: 8%;
+}
+
+.fianco {
+    float: right;
+    margin-left: 8%;
+    width: 300px;
+}
+
+.sconti {
+    width: 300px;
+    margin-bottom: 50px;
+}
+
+.sconti img {
+    width: 100%;
+    height: 200px;
+}
+
+.sc1 {
+    background-color: green;
+    width: 120px;
+    height: 40px;
+    float: left;
+    padding: 10px 25px;
+}
+
+.sc2 {
+    background-color: #9CC3FF;
+    width: 180px;
+    height: 40px;
+    padding: 2px 40px;
+    position: absolute;
+    margin: 0px 120px;
+}
+
+.allinea {
+    margin-left: 4%;
+    float: right;
+}
+
+/* ==========================================================================
+    NAVBAR & INTERACTIVE ACCORDIONS
+   ========================================================================== */
+nav.navbar {
+    background-color: #9CC3FF;
+    margin: 3% 0 0 0;
+    position: static;
+}
+
+ul.navbar-nav {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+}
+
+li.nav-item {
+    float: left;
+    border-right-style: solid;
+    border-right-width: 1px;
+}
+
+.hid-index .nav-item{
+    display:none
+}
+
+.accordion {
+    display: block;
+    color: white;
+    text-align: left;
+    padding: 14px 25px;
+    text-decoration: none;
+}
+
+div.dropdown-menu {
+    opacity: 0;
+    position: absolute;
+    background: #eeeeee;
+    top: 215px;
+    min-width: 80px;
+    z-index: 1;
+    pointer-events: none;
+}
+
+
+a.dropdown-item {
+    color: #b8b6b4;
+    padding: 12px 16px;
+    text-decoration: none;
+    display: block;
+    text-align: left;
+}
+
+a.dropdown-item:hover {
+    color: #f1f1f1;
+    background-color: #171a21;
+}
+
+.nav-item:hover .dropdown-menu {
+    opacity: 1;
+    pointer-events: auto;
+}
+
+.nav-item:hover:not(.active) {
+    background-color: #000000;
+    border-color: transparent;
+}
+
+.form-inline {
+    position: relative;
+    margin-top: 10px;
+    margin-left: 20px;
+    margin-right: 5px;
+    line-height: 16px;
+    float: left;
+    font-size: 14px;
+    color: #b8b6b4;
+    text-transform: uppercase;
+    display: inline-block;
+    text-align: center;
+    text-decoration: none;
+}
+
+/* ==========================================================================
+    SLIDESHOW PRODOTTI IN EVIDENZA
+   ========================================================================== */
+.slideshow-container {
+    max-width: 660px;
+    position: relative;
+}
+
+.mySlides {
+    display: none;
+}
+
+.mySlides img {
+    width: 100%;
+    height: 450px;
+
+}
+
+.visibile {
+    display: block;
+}
+/* ==========================================================================
+    SLIDESHOW PRODOTTI IN EVIDENZA e SCONTATI
+   ========================================================================== */
+/* Navigational Arrows */
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+    transition: 0.6s ease;
+    border-radius: 0 3px 3px 0;
+    user-select: none;
+}
+
+.prev{
+    left:0;
+}
+.next {
+    right: 0;
+    border-radius: 3px 0 0 3px;
+}
+
+.prev:hover, .next:hover {
+    background-color: rgba(0,0,0,0.8);
+}
+
+/* Numerical Overlays & Indicators */
+.numbertext {
+    color: #f2f2f2;
+    font-size: 12px;
+    padding: 8px 12px;
+    position: absolute;
+    top: 30px;
+}
+
+.dot {
+    cursor: pointer;
+    height: 15px;
+    width: 15px;
+    margin: 1% 2px;
+    background-color: #bbb;
+    border-radius: 50%;
+    display: inline-block;
+    transition: background-color 0.6s ease;
+}
+
+.active, .dot:hover {
+    background-color: #717171;
+}
+
+/* Fade Transitions */
+.fade {
+    -webkit-animation-name: fade;
+    -webkit-animation-duration: 1.5s;
+    animation-name: fade;
+    animation-duration: 1.5s;
+}
+
+@-webkit-keyframes fade {
+    from { opacity: .4; }
+    to { opacity: 1; }
+}
+
+@keyframes fade {
+    from { opacity: .4; }
+    to { opacity: 1; }
+}
+
+/* ==========================================================================
+   SlIDESHOW SCONTI
+   ========================================================================== */
+.sconti-container {
+    position: relative;
+    width: 300px;
+    margin-bottom: 50px;
+}
+
+.mySlidesSconti {
+    display: none;
+}
+
+.sconti-container .frecceSconti .prev, .sconti-container .frecceSconti .next {
+    top: 50%;
+}
+
+
+/* ==========================================================================
+    VERTICAL CATEGORY MENU (Drinks)
+   ========================================================================== */
+#drinks {
+    float: right;
+    background-color: #47648f;
+    width: 170px;
+    vertical-align: top;
+}
+
+#drinks:hover .vertical-menu {
+    display: block;
+}
+
+.vertical-menu {
+    background-color: #47648f;
+    width: 180px;
+    margin-left: 0px;
+    margin-top: 20px;
+}
+
+a.vertical_item {
+    color: #9CC3FF;
+    display: block;
+    padding: 5px;
+    text-decoration: none;
+    max-width: 110px;
+}
+
+a.vertical_item:hover {
+    color: #eeeeee;
+}
+
+
+/* ==========================================================================
+    RESPONSIVENESS AND MEDIA QUERIES
+   ========================================================================== */
+@media screen and (max-width: 1500px) {
+    .homepage {
+        width: 100%;
+        margin: 0px;
+    }
+}
+
+@media screen and (max-width: 1430px) {
+    .container_row #drinks {
+        overflow: hidden;
+        width: 0%;
+        transition: width 0.25s;
+    }
+    .allinea {
+        margin-left: 1%;
+    }
+}
+
+@media screen and (max-width: 1191px) {
+    .allinea {
+        display: inline-block;
+        float: none;
+        margin-left: 1%;
+    }
+    .fianco {
+        margin-left: 0px;
+    }
+}
+
+@media screen and (max-width: 1090px) {
+    .fianco {
+        overflow: hidden;
+        width: 0%;
+        height: 0%;
+        transition: width 0.25s;
+    }
+    .sub-sc {
+        width: 0px;
+    }
+    .sc2 {
+        position: relative;
+    }
+    .allinea {
+        margin-left: 12%;
+    }
+}
+
+@media screen and (max-width: 920px) {
+    .homepage .totale .allinea {
+        float: none;
+        margin-left: 0px;
+        width: 100%;
+    }
+    .homepage .totale {
+        margin-right: 0px;
+    }
+    .navbar .form-inline {
+        float: none;
+    }
+    .container_row .navbar {
+        width: 100%;
+        margin: 0px;
+    }
+    .container_row #bottom {
+        text-align: center;
+        margin: 1%;
+    }
+    .navbar-nav .nav-item {
+        width: 100%;
+    }
+    .hid-index .nav-item{
+        display: block;
+    }
+
+
+    .navbar .navbar-nav .nav-item:hover .dropdown-menu {
+        display: none;
+    }
+    .navbar .navbar-nav, .navbar .form-inline button {
+        float: none;
+        display: block;
+        text-align: left;
+        width: 100%;
+        margin: 0;
+    }
+    .navbar .navbar-nav .nav-item {
+        border-style: none;
+    }
+    li.nav-item {
+        padding: 0px;
+    }
+    .accordion {
+        padding: 14px;
+    }
+    .slideshow-container .prev, .slideshow-container .next {
+        top: 50%;
+    }
+    .slideshow-container {
+        margin: 0 4%;
+    }
+}
+
+@media only screen and (max-width: 300px) {
+    .prev, .next {
+        font-size: 11px;
+    }
+}
