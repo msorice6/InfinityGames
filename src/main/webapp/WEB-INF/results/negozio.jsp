@@ -8,7 +8,7 @@
 <html>
 
 <head>
-    <script src="./javascript/negozio.js"></script>
+    <script src="./javascript/negozio.js"> </script>
 </head>
 
 <div class="contain" ondblclick="chiudi(this)">
@@ -113,7 +113,7 @@
                 </div>
 
                 <!-- PAGINAZIONE -->
-                <div class="paginazione" id="paginazione">
+            <div class="paginazione" id="paginazione">
                     <c:if test="${npag > 1}">
 
                         <c:if test="${pag > 1}">

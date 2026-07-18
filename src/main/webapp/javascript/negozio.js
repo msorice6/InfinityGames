@@ -96,8 +96,8 @@ function negozio(paginaRichiesta) {
             });
 
             if(currentCategoria > 0)
-//                    alert("num Pagine del prodotto: "+ pagProdottoCategoria);
-                aggiornaPaginazione(pagProdottoCategoria);
+                alert("num Pagine del prodotto: "+ pagProdottoCategoria);
+            aggiornaPaginazione(pagProdottoCategoria);
         }
     }
 
@@ -130,6 +130,7 @@ function cambiaPagina(pag) {
 }
 
 function aggiornaPaginazione(npag, pagCorrente = 1) {
+//    var container = document.querySelector('.paginazione');
     var container = document.getElementById('paginazione');
     if (!container) return;
 
@@ -168,4 +169,3 @@ function aggiornaPaginazione(npag, pagCorrente = 1) {
     // Inserisce il nuovo HTML nel contenitore
     container.innerHTML = html;
 }
-
