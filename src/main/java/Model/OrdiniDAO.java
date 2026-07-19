@@ -66,6 +66,41 @@ public class OrdiniDAO {
         }
     }
 
+    public List<Ordini> getRetrieveByProdottoUtente(int pid, int uid) {
+        try (Connection con = ConPool.getConnection()) {
+            // La query unisce dettaglio_ordini e prodotto_ordini per filtrare sia per utente che per prodotto
+            String query = "SELECT d.idOrd, d.idUte, d.data_acq, d.totale " +
+                    "FROM dettaglio_ordini d " +
+                    "JOIN prodotto_ordini p ON d.idOrd = p.idOrdine " +
+                    "WHERE d.idUte = ? AND p.idProdotto = ?;";
+
+            PreparedStatement ps = con.prepareStatement(query);
+            ps.setInt(1, uid);
+            ps.setInt(2, pid);
+
+            ArrayList<Ordini> listaOrdini = new ArrayList<>();
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next()) {
+                Ordini ordini = new Ordini();
+                ordini.setId(rs.getInt(1));
+                ordini.setUtente(rs.getInt(2));
+                ordini.setData(rs.getString(3));
+                ordini.setTotale(rs.getDouble(4));
+
+                // Richiama il metodo getProdotti per popolare la lista dei prodotti di quell'ordine
+                ordini.setProdotti(getProdotti(con, ordini.getId()));
+
+                listaOrdini.add(ordini);
+            }
+
+            return listaOrdini;
+        } catch (SQLException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+
     private static List<Carrello.ProdottoQuantita> getProdotti(Connection con, int idOrdine) throws SQLException {
         PreparedStatement ps = con.prepareStatement(
                 "SELECT p.id,p.nome, p.descrizione,p_ord.prezzo,p.sconto,p_ord.quantita,p.images FROM Prodotto p LEFT JOIN prodotto_ordini p_ord ON id=idProdotto WHERE idOrdine=?");

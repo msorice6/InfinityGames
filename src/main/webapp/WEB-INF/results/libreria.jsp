@@ -54,8 +54,11 @@
                             <c:forEach items="${libreria}" var="prodotto">
                                 <div class="contieni">
                                     <div class="img-col">
-                                        <a class="sub-img" href="Prodotto?id=${prodotto.id}">
+                                            <%--                                        <a class="sub-img" href="Prodotto?id=${prodotto.id}">--%>
+                                            <%--                                            <img src="images/prodotti/${prodotto.images}">--%>
+                                        <a class="sub-img" href="Ordine?id=${prodotto.id}">
                                             <img src="images/prodotti/${prodotto.images}">
+
                                         </a>
                                     </div>
                                     <div class="col-2">
